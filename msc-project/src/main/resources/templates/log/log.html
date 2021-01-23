@@ -1,0 +1,60 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<title>
+    test
+</title>
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Edit User</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="users.html">Users</a></li>
+                <li class="active">jsmith</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <table class="table table-condensed table-responsive">
+                <thead>
+                <tr>
+                    <th>Date Time</th>
+                    <th>Class</th>
+                    <th>Method</th>
+                    <th>Level</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${logList.empty}">
+                    <td colspan="5"> No Log Available</td>
+                </tr>
+                <tr th:each="log : ${logList}">
+                    <td><span
+                            th:text="${#strings.substring(log.ts,0,10) + ' '+#strings.substringBefore(#strings.substringAfter(log.ts,'T'),'+')}"> Title </span>
+                    </td>
+                    <!--<td><span th:text="${#dates.format(log.ts, 'dd-MM-yyyy HH:mm')}"> Title </span></td>-->
+                    <td><span th:text="${log.class}"> Title </span></td>
+                    <td><span th:text="${log.method}"> Author </span></td>
+                    <!--<td><span th:text="${log.file}"> Author </span></td>-->
+                    <td><span th:text="${log.level}"> Author </span></td>
+                    <td>
+                        <button th:data="${log.msg}" class="btn btn-xs logShow"> show</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.logShow').on('click', function (e) {
+                var recipient = $(this).attr('data');
+                alert(recipient);
+            });
+        });
+    </script>
+</div>
+</html>

@@ -1,0 +1,12 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{error/errorLayout}">
+
+<div class="dialog" layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-body ">
+            <h2 style="text-align: center">500! Internal Server Error!!</h2>
+        </div>
+    </div>
+    <a onclick="window.history.back();" class="btn btn-sx btn-info">Back</a>
+</div>
