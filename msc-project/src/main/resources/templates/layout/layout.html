@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+    <span th:include="layout/mainHeader::headerPortion" th:remove="tag"/>
+</head>
+<body class=" theme-blue">
+<span th:include="layout/headerJs::headerJsPortion" th:remove="tag"/>
+<span th:include="layout/nevigation::nevPortion" th:remove="tag"/>
+
+</div>
+
+
+<section layout:fragment="content">
+    <p>This is filled by the content template.</p>
+</section>
+<span th:include="layout/bodyJs::bodyJsPortion" th:remove="tag"/>
+</body>
+</html>
