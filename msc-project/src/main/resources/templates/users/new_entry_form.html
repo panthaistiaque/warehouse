@@ -6,7 +6,7 @@
     <div class="content">
         <div class="header">
 
-            <h1 class="page-title">Edit User</h1>
+            <h1 class="page-title">User Details</h1>
             <ul class="breadcrumb">
                 <li><a href="/">Home</a></li>
                 <li><a href="new-user">Users</a></li>
@@ -20,28 +20,28 @@
                     <br>
                     <!--<div id="myTabContent" class="tab-content">-->
                     <div id="home">
-                        <form>
+                        <form th:action="@{/saveUser}" th:method="POST" th:object="${user}">
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" class="form-control">
+                                <input name="firstName" type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control">
+                                <input name="lastName" type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control">
+                                <input name="email" type="text" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="text" class="form-control">
+                                <input name="phone" type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>User Role</label>
-                                <select name="user_role" class="form-control">
+                                <select name="role" class="form-control">
                                     <option value="" style="display: none">Select One user Role</option>
                                     <option value="SM">System Admin</option>
                                     <option value="WM">Warehouse Manager</option>
@@ -58,7 +58,7 @@
                                 <label>Password</label>
                                 <input type="text" class="form-control">
                             </div>
-
+                            <button type="submit" class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
                         </form>
                     </div>
 

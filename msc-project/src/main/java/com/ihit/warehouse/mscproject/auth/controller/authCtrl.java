@@ -16,10 +16,11 @@ import java.util.List;
  */
 @Controller
 public class authCtrl {
-    @ResponseBody
     @GetMapping(value = "/")
-    public List userList(){
-        return Arrays.asList("Istiaque","Hossain","Pantha");
+    public ModelAndView userList(final ModelAndView model){
+//        return Arrays.asList("Istiaque","Hossain","Pantha");
+        model.setViewName("redirect:/user-list");
+        return model;
     }
     @ResponseBody
     @GetMapping(value = "/home")
