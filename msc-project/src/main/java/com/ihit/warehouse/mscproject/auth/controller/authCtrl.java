@@ -36,5 +36,4 @@ public class authCtrl {
     public String aboutPage() {
         return "about";
     }
-
 }
