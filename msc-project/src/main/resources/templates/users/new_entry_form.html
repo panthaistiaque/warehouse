@@ -3,6 +3,17 @@
       layout:decorate="~{layout/layout}">
 
 <div layout:fragment="content">
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.firstname = null;
+            $scope.email = null;
+            $scope.check = function () {
+                alert(" ::::: ");
+                return false;
+            }
+        });
+    </script>
     <div class="content">
         <div class="header">
 
@@ -14,34 +25,34 @@
             </ul>
 
         </div>
-        <div class="main-content">
+        <div class="main-content" ng-app="myApp" ng-controller="myCtrl">
             <div class="row">
                 <div class="col-md-6">
                     <br>
                     <!--<div id="myTabContent" class="tab-content">-->
                     <div id="home">
-                        <form th:action="@{/saveUser}" th:method="POST" th:object="${user}">
+                        <form th:action="@{/saveUser}" th:method="POST" th:object="${user}" name="form" novalidate>
 
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input name="firstName" type="text" class="form-control">
+                                <input name="firstName" ng-model="firstname" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input name="lastName" type="text" class="form-control">
+                                <input name="lastName" ng-model="lastName" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input name="email" type="text" class="form-control">
+                                <input name="email" ng-model="email" type="text" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input name="phone" type="text" class="form-control">
+                                <input name="phone" ng-model="phone" type="text" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>User Role</label>
-                                <select name="role" class="form-control">
+                                <select name="role" ng-model="role" class="form-control" required>
                                     <option value="" style="display: none">Select One user Role</option>
                                     <option value="ROLE_SM">System Admin</option>
                                     <option value="ROLE_WM">Warehouse Manager</option>
@@ -52,15 +63,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" class="form-control">
+                                <input readonly type="text" ng-model="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input name="password" type="text" class="form-control">
+                                <input readonly name="password" ng-model="firstname" type="password" class="form-control">
                             </div>
                             <!--<button type="submit" class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>-->
                             <div class="btn-toolbar list-toolbar">
-                                <button type="submit"  class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
+                                <button type="submit" ng-disabled="form.$invalid"  class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
                                 <button onclick="window.history.back();" class="btn btn-sx btn-info"><i class="fa fa-back"></i> Back</button>
                                 <!--<a href="#myModal" data-toggle="modal" class="btn btn-danger">Delete</a>-->
                             </div>
@@ -94,4 +105,5 @@
 
         </div>
     </div>
+
 </div>

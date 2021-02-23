@@ -5,6 +5,7 @@ import com.ihit.warehouse.mscproject.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,13 +24,21 @@ public class UserCtrl {
     }
 
     @GetMapping("/user-list")
-    public String userList() {
-        return "users/userList";
+    public ModelAndView userList(final ModelAndView model) {
+        model.addObject("list", userService.findAll());
+        model.setViewName("users/userList");
+        return model;
     }
 
     @PostMapping("/saveUser")
     public ModelAndView saveUser(final ModelAndView model, User user) {
         userService.save(user);
+        model.setViewName("redirect:/user-list");
+        return model;
+    }
+    @PostMapping("/deleteUser/{id}")
+    public ModelAndView deleteUser(final ModelAndView model,@PathVariable("id") Integer id) {
+        userService.deleteById(id);
         model.setViewName("redirect:/user-list");
         return model;
     }

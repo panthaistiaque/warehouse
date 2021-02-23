@@ -21,15 +21,23 @@ public class UserService {
     RoleRepo roleRepo;
 
 
-    public User save(User user){
+    public User save(User user) {
 
-        if(user.getRole()!=null){
-            Role  r = roleRepo.findByRoleName(user.getRole());
+        if (user.getRole() != null) {
+            Role r = roleRepo.findByRoleName(user.getRole());
             List<Role> list = new ArrayList<>();
             list.add(r);
             user.setRoleList(list);
         }
         User userentry = userRepo.save(user);
         return userentry;
+    }
+
+    public List<User> findAll() {
+        return userRepo.findAllByOrderByIdAsc();
+    }
+
+    public void deleteById(Integer id) {
+        userRepo.deleteById(id);
     }
 }

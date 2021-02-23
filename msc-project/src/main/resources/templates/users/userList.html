@@ -17,7 +17,7 @@
         <div class="main-content">
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-striped table-responsive">
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
@@ -26,9 +26,25 @@
                             <th>E-mail</th>
                             <th>Action</th>
                         </tr>
+                        <tr th:each="listObj:${list}">
+                            <td th:text="${listObj.id}">SL</td>
+                            <td th:text="${listObj.firstName +' '+listObj.lastName}">Name</td>
+                            <td th:text="${listObj.roleList[0].roleName}">Role</td>
+                            <td th:text="${listObj.phone}">Phone</td>
+                            <td th:text="${listObj.email}">E-mail</td>
+                            <td>
+                                <a class="btn btn-success btn-xs">Edit</a>
+                                <a th:data="${listObj.id}" class="btn btn-danger btn-xs">Delete</a>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            alert();
+        });
+    </script>
 </div>
