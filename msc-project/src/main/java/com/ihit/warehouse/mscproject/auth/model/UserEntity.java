@@ -8,17 +8,17 @@ import lombok.Data;
 
 import javax.persistence.*;
 @Data
-@Entity
-@Table(name = "user")
+//@Entity
+//@Table(name = "user")
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
     private String lastName;
-    @Column(unique = true)
+//    @Column(unique = true)
     private String email;
     private String password;
 

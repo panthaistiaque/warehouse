@@ -43,11 +43,11 @@
                                 <label>User Role</label>
                                 <select name="role" class="form-control">
                                     <option value="" style="display: none">Select One user Role</option>
-                                    <option value="SM">System Admin</option>
-                                    <option value="WM">Warehouse Manager</option>
-                                    <option value="WS">Warehouse Staff</option>
-                                    <option value="MTM">Marketing Team Manager</option>
-                                    <option disabled value="S">Suppliers</option>
+                                    <option value="ROLE_SM">System Admin</option>
+                                    <option value="ROLE_WM">Warehouse Manager</option>
+                                    <option value="ROLE_WS">Warehouse Staff</option>
+                                    <option value="ROLE_MTM">Marketing Team Manager</option>
+                                    <option disabled value="ROLE_S">Suppliers</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -56,18 +56,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="text" class="form-control">
+                                <input name="password" type="text" class="form-control">
                             </div>
-                            <button type="submit" class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
+                            <!--<button type="submit" class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>-->
+                            <div class="btn-toolbar list-toolbar">
+                                <button type="submit"  class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
+                                <button onclick="window.history.back();" class="btn btn-sx btn-info"><i class="fa fa-back"></i> Back</button>
+                                <!--<a href="#myModal" data-toggle="modal" class="btn btn-danger">Delete</a>-->
+                            </div>
                         </form>
                     </div>
 
 
-                    <div class="btn-toolbar list-toolbar">
-                        <button class="btn btn-sx btn-info"><i class="fa fa-save"></i> Save</button>
-                        <button class="btn btn-sx btn-info"><i class="fa fa-back"></i> Back</button>
-                        <!--<a href="#myModal" data-toggle="modal" class="btn btn-danger">Delete</a>-->
-                    </div>
+
                 </div>
             </div>
 

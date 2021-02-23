@@ -1,6 +1,8 @@
 package com.ihit.warehouse.mscproject.users.controllar;
 
 import com.ihit.warehouse.mscproject.users.DataBind.User;
+import com.ihit.warehouse.mscproject.users.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class UserCtrl {
+    @Autowired
+    UserService userService;
     @GetMapping("/new-user")
     public ModelAndView newUser(final ModelAndView model) {
         model.addObject("user", new User());
@@ -25,7 +29,8 @@ public class UserCtrl {
 
     @PostMapping("/saveUser")
     public ModelAndView saveUser(final ModelAndView model, User user) {
-        model.setViewName("users/new_entry_form");
+        userService.save(user);
+        model.setViewName("redirect:/user-list");
         return model;
     }
 }
