@@ -1,0 +1,88 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.firstname = null;
+            $scope.email = null;
+            $scope.item [{},{}];
+            $scope.check = function () {
+                alert(" ::::: ");
+                return false;
+            }
+        });
+    </script>
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">User Details</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="new-user"> Shipment</a></li>
+                <li class="active">Shipment Details</li>
+            </ul>
+
+        </div>
+        <div class="main-content" ng-app="myApp" ng-controller="myCtrl">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div id="home">
+                        <form>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Supplier Name</label>
+                                        <select class="form-control" id="task" name="task">
+                                            <option style="display: none" value="">Select one supplier</option>
+                                            <option th:each="supplier : ${suppliersList}" th:value="${supplier}"
+                                                    th:text="${supplier.name}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Requested Date</label>
+                                        <input name="lastName" ng-model="requested_date" placeholder="yyyy-mm-dd"
+                                               type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>Rmarks</label>
+                                        <input name="rmarks" ng-model="rmarks" type="text" class="form-control"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div ng-repeat="obj in item" class="form-group col-md-12">
+                                        <input  name="rmarks" ng-model="rmarks" type="text" class="form-control"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                startDate: '-3d'
+            });
+        });
+    </script>
+
+</div>

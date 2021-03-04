@@ -21,10 +21,24 @@
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
-                            <th>Role</th>
-                            <th>Phone</th>
-                            <th>E-mail</th>
+                            <th>Address</th>
+                            <th>e-Mail</th>
+                            <th>Contact Person</th>
                             <th>Action</th>
+                        </tr>
+                        <tr th:each="listObj:${suppliersList}">
+                            <td th:text="${listObj.id}">SL</td>
+                            <td th:text="${listObj.name }">Name</td>
+                            <td th:text="${listObj.address}">Role</td>
+                            <td th:text="${listObj.email}">Phone</td>
+                            <td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">E-mail</td>
+                            <td>
+                                <button class="btn btn-success btn-xs">Edit</button>
+                                <!--<form th:action="@{/deleteUser/}+${listObj.id}" th:method="POST">-->
+                                    <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
+                                <!--</form>-->
+
+                            </td>
                         </tr>
                     </table>
                 </div>

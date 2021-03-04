@@ -4,6 +4,7 @@ import com.ihit.warehouse.mscproject.auth.model.Role;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,13 +18,14 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
     @Column(nullable = false, unique = true, length = 60)
+//    @UniqueElements(message = "email id cannot be duplicate")
     private String email;
     //private String role;
     @Column(length = 11)

@@ -6,6 +6,7 @@ import com.ihit.warehouse.mscproject.users.DataBind.User;
 import com.ihit.warehouse.mscproject.users.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class UserService {
     @Autowired
     RoleRepo roleRepo;
 
-
+    @Transactional
     public User save(User user) {
 
         if (user.getRole() != null) {

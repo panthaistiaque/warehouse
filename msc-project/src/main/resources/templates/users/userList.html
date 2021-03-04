@@ -33,8 +33,11 @@
                             <td th:text="${listObj.phone}">Phone</td>
                             <td th:text="${listObj.email}">E-mail</td>
                             <td>
-                                <a class="btn btn-success btn-xs">Edit</a>
-                                <a th:data="${listObj.id}" class="btn btn-danger btn-xs">Delete</a>
+                                <button class="btn btn-success btn-xs">Edit</button>
+                                <form th:action="@{/deleteUser/}+${listObj.id}" th:method="POST">
+                                    <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
+                                </form>
+
                             </td>
                         </tr>
                     </table>
@@ -43,8 +46,12 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            alert();
-        });
+//        $(document).ready(function () {
+//
+//            $(".btnDelete").on('click', function(event){
+//                alert( $(this).attr('data'));
+//            });
+//        });
+
     </script>
 </div>
