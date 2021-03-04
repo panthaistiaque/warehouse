@@ -7,11 +7,32 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope) {
             $scope.firstname = null;
-            $scope.email = null;
-            $scope.item [{},{}];
-            $scope.check = function () {
-                alert(" ::::: ");
-                return false;
+            $scope.requested_date = null;
+            $scope.rmarks = null;
+            $scope.item = [{type: null, name: null, size: null, qty: null}, {
+                type: null,
+                name: null,
+                size: null,
+                qty: null
+            }];
+
+            $scope.removeItem = function (obj) {
+                if (obj > -1) {
+                    $scope.item.splice(obj, 1);
+                }
+            }
+            $scope.addItem = function () {
+                var itemObj = {type: null, name: null, size: null, qty: null};
+                $scope.item.push(itemObj);
+            }
+            $scope.save = function () {
+                var obj = {
+                    supplier: $scope.supplier,
+                    requested_date: $scope.requested_date,
+                    rmarks: $scope.rmarks,
+                    item: $scope.item
+                }
+                console.log(obj);
             }
         });
     </script>
@@ -36,7 +57,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label>Supplier Name</label>
-                                        <select class="form-control" id="task" name="task">
+                                        <select ng-model="supplier" class="form-control" id="task" name="task">
                                             <option style="display: none" value="">Select one supplier</option>
                                             <option th:each="supplier : ${suppliersList}" th:value="${supplier}"
                                                     th:text="${supplier.name}">
@@ -61,12 +82,31 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div ng-repeat="obj in item" class="form-group col-md-12">
-                                        <input  name="rmarks" ng-model="rmarks" type="text" class="form-control"
-                                               required>
+                                    <div class="form-group col-md-12">
+                                        <label>Requested Item</label>
+                                        <table class="table table-condensed table-responsive ">
+                                            <tr>
+                                                <td>Type</td>
+                                                <td>Item</td>
+                                                <td>Size</td>
+                                                <td>Qty</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr ng-repeat="x in item track by $index">
+                                                <td><input type="text" ng-model="x.type"></td>
+                                                <td><input type="text" ng-model="x.name"></td>
+                                                <td><input type="text" ng-model="x.size"></td>
+                                                <td><input type="text" ng-model="x.qty"></td>
+                                                <td>
+                                                    <button ng-click="removeItem($index)">X</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <button ng-click="addItem()">+</button>
                                     </div>
                                 </div>
                             </div>
+                            <button ng-click="save()">Save</button>
                         </form>
                     </div>
 
@@ -77,12 +117,5 @@
 
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('.datepicker').datepicker({
-                startDate: '-3d'
-            });
-        });
-    </script>
 
 </div>
