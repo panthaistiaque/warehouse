@@ -29,9 +29,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().withUser("admin@gmail.com").password(passwordEncoder().encode("admin")).roles("ADMIN");
 //        auth.authenticationProvider(authenticationProvider);
     }
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable() ;
-//    }
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable() ;
+    }
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
