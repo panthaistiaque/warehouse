@@ -27,6 +27,7 @@ public class ShipmentCtrl {
     @PostMapping("/save-shipment")
     public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment){
         ModelAndView modelAndView =  new ModelAndView();
+        System.out.println(shipment);
         modelAndView.setViewName("redirect:/new-shipment");
         return modelAndView;
     }
