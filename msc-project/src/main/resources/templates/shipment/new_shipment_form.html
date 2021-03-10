@@ -70,7 +70,7 @@
                                         <label>Supplier Name</label>
                                         <select ng-model="supplier" class="form-control" id="task" name="task">
                                             <option style="display: none" value="">Select one supplier</option>
-                                            <option th:each="supplier : ${suppliersList}" th:value="${supplier}"
+                                            <option th:each="supplier : ${suppliersList}" th:value="${supplier.id}"
                                                     th:text="${supplier.name}">
                                             </option>
                                         </select>

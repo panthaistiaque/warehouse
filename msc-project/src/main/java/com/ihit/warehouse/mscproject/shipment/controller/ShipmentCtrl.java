@@ -1,5 +1,6 @@
 package com.ihit.warehouse.mscproject.shipment.controller;
 
+import com.ihit.warehouse.mscproject.shipment.service.ShipmentService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import java.util.Map;
 @Controller
 public class ShipmentCtrl {
     @Autowired
+    ShipmentService shipmentService;
+    @Autowired
     SuppliersService suppliersService;
     @GetMapping("/new-shipment")
     public ModelAndView newShipment(final ModelAndView modelAndView) {
@@ -27,7 +30,7 @@ public class ShipmentCtrl {
     @PostMapping("/save-shipment")
     public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment){
         ModelAndView modelAndView =  new ModelAndView();
-        System.out.println(shipment);
+        shipmentService.saveShipment(shipment);
         modelAndView.setViewName("redirect:/new-shipment");
         return modelAndView;
     }
