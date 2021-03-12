@@ -60,66 +60,75 @@
         </div>
         <div class="main-content" ng-app="myApp" ng-controller="myCtrl">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
 
                     <div id="home">
-                        <form>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label>Supplier Name</label>
-                                        <select ng-model="supplier" class="form-control" id="task" name="task">
-                                            <option style="display: none" value="">Select one supplier</option>
-                                            <option th:each="supplier : ${suppliersList}" th:value="${supplier.id}"
-                                                    th:text="${supplier.name}">
-                                            </option>
-                                        </select>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+
+                                <form>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label>Supplier Name</label>
+                                                <select ng-model="supplier" class="form-control" id="task" name="task">
+                                                    <option style="display: none" value="">Select one supplier</option>
+                                                    <option th:each="supplier : ${suppliersList}"
+                                                            th:value="${supplier.id}"
+                                                            th:text="${supplier.name}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Requested Date</label>
+                                                <input name="lastName" ng-model="requested_date"
+                                                       placeholder="yyyy-mm-dd"
+                                                       type="text" class="form-control" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Requested Date</label>
-                                        <input name="lastName" ng-model="requested_date" placeholder="yyyy-mm-dd"
-                                               type="text" class="form-control" required>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Rmarks</label>
+                                                <input name="rmarks" ng-model="rmarks" type="text" class="form-control"
+                                                       required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Requested Item</label>
+                                                <table style="border: none" class="table table-condensed table-responsive ">
+                                                    <tr>
+                                                        <td>Type</td>
+                                                        <td>Item</td>
+                                                        <td>Size</td>
+                                                        <td>Qty</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr ng-repeat="x in item track by $index" >
+                                                        <td ><input type="text" ng-model="x.type"></td>
+                                                        <td><input type="text" ng-model="x.name"></td>
+                                                        <td><input type="text" ng-model="x.size"></td>
+                                                        <td><input type="text" ng-model="x.qty"></td>
+                                                        <td>
+                                                            <button ng-click="removeItem($index)"><i
+                                                                    class="icon-remove">X</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <button ng-click="addItem()"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="pull-right" ng-click="save()">Save</button>
+                                </form>
                             </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>Rmarks</label>
-                                        <input name="rmarks" ng-model="rmarks" type="text" class="form-control"
-                                               required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label>Requested Item</label>
-                                        <table class="table table-condensed table-responsive ">
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Item</td>
-                                                <td>Size</td>
-                                                <td>Qty</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr ng-repeat="x in item track by $index">
-                                                <td><input type="text" ng-model="x.type"></td>
-                                                <td><input type="text" ng-model="x.name"></td>
-                                                <td><input type="text" ng-model="x.size"></td>
-                                                <td><input type="text" ng-model="x.qty"></td>
-                                                <td>
-                                                    <button ng-click="removeItem($index)"><i class="icon-remove">X</i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <button ng-click="addItem()"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="pull-right" ng-click="save()">Save</button>
-                        </form>
+                        </div>
                     </div>
 
 
