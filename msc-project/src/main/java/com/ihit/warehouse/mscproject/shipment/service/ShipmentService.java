@@ -1,6 +1,7 @@
 package com.ihit.warehouse.mscproject.shipment.service;
 
 import com.ihit.warehouse.mscproject.shipment.repo.ShipmentRepo;
+import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class ShipmentService {
             obj.put("orderMasterId", orderMasterId);
         }
         int[] detailsId= shipmentRepo.saveShipmentDetails(maps);
-        System.out.println(detailsId);
+        System.out.println(Status.INITIATED);
         return null;
     }
 }
