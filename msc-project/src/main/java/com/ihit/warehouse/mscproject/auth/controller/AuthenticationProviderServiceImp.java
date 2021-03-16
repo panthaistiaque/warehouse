@@ -1,5 +1,8 @@
 package com.ihit.warehouse.mscproject.auth.controller;
 
+import com.ihit.warehouse.mscproject.users.DataBind.User;
+import com.ihit.warehouse.mscproject.users.repo.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,13 +19,25 @@ import java.util.List;
  */
 @Component
 public class AuthenticationProviderServiceImp implements AuthenticationProvider {
+    @Autowired
+    UserRepo userRepo;
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException   {
         List<GrantedAuthority> grantList = new ArrayList<>();
         String name = authentication.getName();
         String password = ((String) authentication.getCredentials()).trim();
+        User user;
         System.out.println(name +" :: "+password );
-
+        try {
+            user = userRepo.findOneByEmail(name);
+            if (user != null) {
+                return new UsernamePasswordAuthenticationToken(user, password, grantList);
+            }
+        } catch (Exception e) {
+            System.out.println("Login attempt failed due to system error!! Reason : " + e);
+            System.out.println(e);
+        }
+        System.out.println("Login attempt failed  by User : '" + name + "'.");
         throw new BadCredentialsException("invalid username or password!");
 //        return null;
     }

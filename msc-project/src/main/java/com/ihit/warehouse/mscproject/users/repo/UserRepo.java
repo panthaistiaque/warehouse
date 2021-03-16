@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
     List findAllByOrderByIdAsc();
+   public User findOneByEmail(String email);
 }
