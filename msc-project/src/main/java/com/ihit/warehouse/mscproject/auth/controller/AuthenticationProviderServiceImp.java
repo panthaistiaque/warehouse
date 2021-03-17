@@ -1,5 +1,6 @@
 package com.ihit.warehouse.mscproject.auth.controller;
 
+import com.ihit.warehouse.mscproject.auth.model.Role;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
 import com.ihit.warehouse.mscproject.users.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,6 +33,12 @@ public class AuthenticationProviderServiceImp implements AuthenticationProvider 
         try {
             user = userRepo.findOneByEmail(name);
             if (user != null) {
+                if(user.getRoleList()!=null){
+                    for (Role r: user.getRoleList()) {
+                        GrantedAuthority authority = new SimpleGrantedAuthority(r.getRoleName());
+                        grantList.add(authority);
+                    }
+                }
                 return new UsernamePasswordAuthenticationToken(user, password, grantList);
             }
         } catch (Exception e) {

@@ -2,7 +2,9 @@ package com.ihit.warehouse.mscproject.shipment.controller;
 
 import com.ihit.warehouse.mscproject.shipment.service.ShipmentService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
+import com.ihit.warehouse.mscproject.users.DataBind.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +23,9 @@ public class ShipmentCtrl {
     @Autowired
     SuppliersService suppliersService;
     @GetMapping("/new-shipment")
-    public ModelAndView newShipment(final ModelAndView modelAndView) {
+    public ModelAndView newShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser ) {
         modelAndView.addObject("suppliersList", suppliersService.findAll());
+        modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("shipment/new_shipment_form");
         return modelAndView;
     }
