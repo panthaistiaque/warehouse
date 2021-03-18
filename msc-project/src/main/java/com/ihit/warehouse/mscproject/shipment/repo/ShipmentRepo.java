@@ -24,8 +24,8 @@ public class ShipmentRepo {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public  ShipmentRepo(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(this.dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     public Integer saveShipmentMaster(Map<String, Object> shipment) {
@@ -46,5 +46,9 @@ public class ShipmentRepo {
         int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(
                 "INSERT INTO shipment_details(shipment_master_id, type, name, size, qty)  VALUES (:orderMasterId, :type, :name, :size, :qty)", batch);
         return updateCounts;
+    }
+    public List<Map<String, Object>> getAllOrders(){
+        String sql = "SELECT * FROM shipment_master s inner join suppliers su on su.id = s.suppliers_id where active='1'";
+        return jdbcTemplate.queryForList(sql);
     }
 }

@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Suppliers List</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="new-supplier">Suppliers</a></li>
+                <li class="active">Suppliers List</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-responsive">
+                        <tr>
+                            <th>SL</th>
+                            <th>Name</th>
+                            <th>email</th>
+                            <th>status</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr th:each="listObj:${suppliersList}">
+                            <td th:text="${listObj.id}">SL</td>
+                            <td th:text="${listObj.name }">Name</td>
+                            <td th:text="${listObj.email}">Phone</td>
+                            <td th:text="${listObj.status}">Phone</td>
+                            <!--<td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">E-mail</td>-->
+                            <td>
+                                <button class="btn btn-success btn-xs">Details</button>
+                                <button class="btn btn-success btn-xs">Edit</button>
+                                <button class="btn btn-success btn-xs">Froward</button>
+                                <!--<form th:action="@{/deleteUser/}+${listObj.id}" th:method="POST">-->
+                                <!--<button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>-->
+                                <!--</form>-->
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

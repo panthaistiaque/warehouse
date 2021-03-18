@@ -29,6 +29,13 @@ public class ShipmentCtrl {
         modelAndView.setViewName("shipment/new_shipment_form");
         return modelAndView;
     }
+    @GetMapping("/all-shipment")
+    public ModelAndView getAllShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser ) {
+        modelAndView.addObject("suppliersList", shipmentService.getAllOrders());
+        modelAndView.addObject("user", currentUser);
+        modelAndView.setViewName("shipment/order_list");
+        return modelAndView;
+    }
 
     @PostMapping("/save-shipment")
     public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment){

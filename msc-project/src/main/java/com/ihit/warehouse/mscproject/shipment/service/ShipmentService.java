@@ -20,13 +20,17 @@ public class ShipmentService {
     @Transactional
     public Map<String, Object> saveShipment(Map<String, Object> shipment) {
         Integer orderMasterId = shipmentRepo.saveShipmentMaster(shipment);
-        List<Map<String, Object>>  maps = (List<Map<String, Object>>) shipment.get("item");
+        List<Map<String, Object>> maps = (List<Map<String, Object>>) shipment.get("item");
         System.out.println(orderMasterId);
-        for (Map<String, Object> obj: maps) {
+        for (Map<String, Object> obj : maps) {
             obj.put("orderMasterId", orderMasterId);
         }
-        int[] detailsId= shipmentRepo.saveShipmentDetails(maps);
+        int[] detailsId = shipmentRepo.saveShipmentDetails(maps);
         System.out.println(Status.INITIATED);
         return null;
+    }
+
+    public List<Map<String, Object>> getAllOrders() {
+        return shipmentRepo.getAllOrders();
     }
 }
