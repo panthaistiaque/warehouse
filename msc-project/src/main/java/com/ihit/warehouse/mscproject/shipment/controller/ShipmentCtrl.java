@@ -23,46 +23,51 @@ public class ShipmentCtrl {
     ShipmentService shipmentService;
     @Autowired
     SuppliersService suppliersService;
+
     @GetMapping("/new-shipment")
-    public ModelAndView newShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser ) {
+    public ModelAndView newShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser) {
         modelAndView.addObject("suppliersList", suppliersService.findAll());
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("shipment/new_shipment_form");
         return modelAndView;
     }
+
     @GetMapping("/all-shipment")
-    public ModelAndView getAllShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser ) {
+    public ModelAndView getAllShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser) {
         modelAndView.addObject("suppliersList", shipmentService.getAllOrders());
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("shipment/order_list");
         return modelAndView;
     }
+
     @GetMapping("/order-froward/{id}")
-    public ModelAndView orderFroward(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+    public ModelAndView orderFroward(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id) {
         shipmentService.orderFroward(id);
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
+
     @GetMapping("/order-delete/{id}")
-    public ModelAndView orderDelete(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+    public ModelAndView orderDelete(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id) {
         shipmentService.deleteOrders(id);
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
+
     @GetMapping("/order-edit/{id}")
-    public ModelAndView orderEdit(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+    public ModelAndView orderEdit(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id) {
         modelAndView.addObject("user", currentUser);
-        modelAndView.setViewName("redirect:/all-shipment");
+        modelAndView.setViewName("redirect:/new-shipment?id=" + id);
         return modelAndView;
     }
 
     @PostMapping("/save-shipment")
-    public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment){
-        ModelAndView modelAndView =  new ModelAndView();
+    public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment) {
+        ModelAndView modelAndView = new ModelAndView();
         shipmentService.saveShipment(shipment);
-        modelAndView.setViewName("redirect:/new-shipment");
+        modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
 }
