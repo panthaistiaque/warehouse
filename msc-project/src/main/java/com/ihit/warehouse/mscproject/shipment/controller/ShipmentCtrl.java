@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +35,26 @@ public class ShipmentCtrl {
         modelAndView.addObject("suppliersList", shipmentService.getAllOrders());
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("shipment/order_list");
+        return modelAndView;
+    }
+    @GetMapping("/order-froward/{id}")
+    public ModelAndView orderFroward(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+        shipmentService.orderFroward(id);
+        modelAndView.addObject("user", currentUser);
+        modelAndView.setViewName("redirect:/all-shipment");
+        return modelAndView;
+    }
+    @GetMapping("/order-delete/{id}")
+    public ModelAndView orderDelete(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+        shipmentService.deleteOrders(id);
+        modelAndView.addObject("user", currentUser);
+        modelAndView.setViewName("redirect:/all-shipment");
+        return modelAndView;
+    }
+    @GetMapping("/order-edit/{id}")
+    public ModelAndView orderEdit(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @PathVariable("id") Integer id ) {
+        modelAndView.addObject("user", currentUser);
+        modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
 

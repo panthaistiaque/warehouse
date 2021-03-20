@@ -1,5 +1,6 @@
 package com.ihit.warehouse.mscproject.shipment.repo;
 
+import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,7 +24,7 @@ public class ShipmentRepo {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public  ShipmentRepo(DataSource dataSource) {
+    public ShipmentRepo(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -37,18 +38,30 @@ public class ShipmentRepo {
         map.addValue("requested_date", shipment.get("requested_date"));
         System.out.println(map);
         KeyHolder holder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(insertSql, map,holder, new String[]{"id"});
+        namedParameterJdbcTemplate.update(insertSql, map, holder, new String[]{"id"});
 
-        return  holder.getKey().intValue();
+        return holder.getKey().intValue();
     }
+
     public int[] saveShipmentDetails(List<Map<String, Object>> shipment) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(shipment.toArray());
         int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(
                 "INSERT INTO shipment_details(shipment_master_id, type, name, size, qty)  VALUES (:orderMasterId, :type, :name, :size, :qty)", batch);
         return updateCounts;
     }
-    public List<Map<String, Object>> getAllOrders(){
-        String sql = "SELECT * FROM shipment_master s inner join suppliers su on su.id = s.suppliers_id where active='1'";
+
+    public List<Map<String, Object>> getAllOrders() {
+        String sql = "SELECT md5(s.id) sid, s.*,su.* FROM shipment_master s inner join suppliers su on su.id = s.suppliers_id where active='1'";
         return jdbcTemplate.queryForList(sql);
+    }
+
+    public void deleteOrders(Integer id) {
+        String sql = "update shipment_master set active = 0 where id= ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    public void orderFroward(Integer id) {
+        String sql = "update shipment_master set status=? where id= ?";
+        jdbcTemplate.update(sql, Status.FROWARD, id);
     }
 }

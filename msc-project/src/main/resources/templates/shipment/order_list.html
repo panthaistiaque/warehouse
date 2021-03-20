@@ -16,7 +16,7 @@
         </div>
         <div class="main-content">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" ng-app="myApp" ng-controller="myCtrl">
                     <table class="table table-bordered table-responsive">
                         <tr>
                             <th>SL</th>
@@ -32,9 +32,10 @@
                             <td th:text="${listObj.status}">Phone</td>
                             <!--<td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">E-mail</td>-->
                             <td>
-                                <button class="btn btn-success btn-xs">Details</button>
-                                <button class="btn btn-success btn-xs">Edit</button>
-                                <button class="btn btn-success btn-xs">Froward</button>
+                                <a th:href="${'/order-details/'+listObj.id}"  class="btn btn-success btn-xs">Details</a>
+                                <a th:href="${'/order-edit/'+listObj.id}" th:if="${listObj.status=='Initiated'}" class="btn btn-success btn-xs">Edit</a>
+                                <a  th:href="${'/order-froward/'+listObj.id}" th:if="${listObj.status=='Initiated'}" class="btn btn-success btn-xs">Froward</a>
+                                <a th:href="${'/order-delete/'+listObj.id}" th:if="${listObj.status=='Initiated'}" class="btn btn-success btn-xs">Delete</a>
                                 <!--<form th:action="@{/deleteUser/}+${listObj.id}" th:method="POST">-->
                                 <!--<button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>-->
                                 <!--</form>-->
@@ -46,4 +47,12 @@
             </div>
         </div>
     </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+            $scope.froward = function () {
+
+            }
+        });
+    </script>
 </div>

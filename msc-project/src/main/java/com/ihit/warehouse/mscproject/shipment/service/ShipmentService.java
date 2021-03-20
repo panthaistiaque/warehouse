@@ -33,4 +33,12 @@ public class ShipmentService {
     public List<Map<String, Object>> getAllOrders() {
         return shipmentRepo.getAllOrders();
     }
+
+    public void deleteOrders(Integer id) {
+        shipmentRepo.deleteOrders(id);
+    }
+
+    public void orderFroward(Integer id) {
+        shipmentRepo.orderFroward(id);
+    }
 }
