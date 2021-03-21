@@ -1,6 +1,7 @@
 package com.ihit.warehouse.mscproject.shipment.service;
 
 import com.ihit.warehouse.mscproject.shipment.repo.ShipmentRepo;
+import com.ihit.warehouse.mscproject.util.EmailUtil;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.Map;
 public class ShipmentService {
     @Autowired
     ShipmentRepo shipmentRepo;
+    @Autowired
+    EmailUtil emailUtil;
 
     @Transactional
     public Map<String, Object> saveShipment(Map<String, Object> shipment) {
@@ -39,6 +42,7 @@ public class ShipmentService {
     }
 
     public void orderFroward(Integer id) {
+        emailUtil.manageMail("UserApprove","panthaistiaque@gmail.com","");
         shipmentRepo.orderFroward(id);
     }
 }
