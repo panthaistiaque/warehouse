@@ -22,4 +22,7 @@ public class SuppliersService {
     public List<Suppliers> findAll(){
         return suppliersRepo.findAll();
     }
+    public Suppliers findById(Integer id){
+        return suppliersRepo.findById(id).get();
+    }
 }

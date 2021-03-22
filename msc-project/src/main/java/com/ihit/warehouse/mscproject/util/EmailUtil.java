@@ -17,12 +17,11 @@ public class EmailUtil {
     private JavaMailSender sender;
 
     String orderList = "";
-    public void manageMail(String type, String toAddress, String tokenValue) {
+    public void manageMail(String type, String toAddress, String s,String d ) {
         switch (type) {
-            case "UserApprove":
-                String s = "http://localhost:8080/setpassword?tk="+tokenValue + "&v=" + String.valueOf(System.currentTimeMillis());
+            case "NewOrdersList":
                 System.out.println(s);
-                sendEmail(null , "Request Accepted", toAddress);
+                sendEmail(d , "Request Accepted", toAddress);
         }
     }
     private void sendEmail(String mailBody, String subject, String toAddress) {
@@ -34,8 +33,8 @@ public class EmailUtil {
 
 
             helper.setTo(toAddress);
-        helper.setText("<html><body>Here is a cat picture! <img src='cid:id101'/><body></html>", true);
-//            helper.setText(mailBody, true);
+//        helper.setText("<html><body>Here is a cat picture! <img src='cid:id101'/><body></html>", true);
+            helper.setText(mailBody, true);
             helper.setSubject(subject);
 
 //            ClassPathResource file = new ClassPathResource("evote_min.jpg");

@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final String[] UNAUTHENTICATED_URL = {"/vendor-singup"};
+
     @Autowired
     AuthenticationProvider authenticationProvider;
 
@@ -36,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable()
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests().antMatchers(UNAUTHENTICATED_URL).permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()

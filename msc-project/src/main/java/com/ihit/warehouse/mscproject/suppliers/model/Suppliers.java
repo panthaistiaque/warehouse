@@ -3,6 +3,7 @@ package com.ihit.warehouse.mscproject.suppliers.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * Created by User on 2/27/2021.
@@ -26,4 +27,6 @@ public class Suppliers {
     @Column(nullable = false, length = 11)
     private String contactPersonPhone;
     private String remarks;
+    @Column(unique = true, updatable = false)
+    private UUID token;
 }
