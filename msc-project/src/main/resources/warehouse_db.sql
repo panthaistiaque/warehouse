@@ -38,6 +38,12 @@ CREATE TABLE `role` (
 --
 
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` (`role_id`,`role_name`) VALUES 
+ (4,'ROLE_MTM'),
+ (5,'ROLE_S'),
+ (1,'ROLE_SM'),
+ (2,'ROLE_WM'),
+ (3,'ROLE_WS');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
 
@@ -62,6 +68,11 @@ CREATE TABLE `shipment_details` (
 --
 
 /*!40000 ALTER TABLE `shipment_details` DISABLE KEYS */;
+INSERT INTO `shipment_details` (`id`,`shipment_master_id`,`type`,`name`,`size`,`qty`,`active`) VALUES 
+ (1,14,'435','wedwqe','wqewqe','wqewqe',1),
+ (2,14,'5',NULL,'wqewq','ewqewqsa',1),
+ (3,14,'453','wqewqe','wqewq','dfdsg',1),
+ (4,14,'34534',NULL,'wqeewqewe','rtyerr',1);
 /*!40000 ALTER TABLE `shipment_details` ENABLE KEYS */;
 
 
@@ -76,6 +87,7 @@ CREATE TABLE `shipment_master` (
   `remarks` varchar(100) NOT NULL,
   `requested_date` varchar(45) NOT NULL,
   `active` tinyint(3) unsigned NOT NULL default '1',
+  `status` varchar(45) NOT NULL default 'Initiated',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -84,6 +96,18 @@ CREATE TABLE `shipment_master` (
 --
 
 /*!40000 ALTER TABLE `shipment_master` DISABLE KEYS */;
+INSERT INTO `shipment_master` (`id`,`suppliers_id`,`remarks`,`requested_date`,`active`,`status`) VALUES 
+ (1,1,'qwewq','istiaque',1,'Initiated'),
+ (2,1,'qwewq','2021-03-07',1,'Froward'),
+ (3,1,'qwewq','2021-03-07',1,'Froward'),
+ (4,1,'rewrew','2021-03-07',1,'Initiated'),
+ (5,1,'rewrew','2021-03-07',1,'Froward'),
+ (6,1,'rewrew','2021-03-07',1,'Initiated'),
+ (7,1,'rewrew','2021-03-07',1,'Froward'),
+ (8,1,'rewrew','2021-03-07',1,'Froward'),
+ (12,1,'rewrew','2021-03-07',1,'Froward'),
+ (13,1,'rewrew','2021-03-07',1,'Froward'),
+ (14,1,'rewrew','2021-03-07',1,'Initiated');
 /*!40000 ALTER TABLE `shipment_master` ENABLE KEYS */;
 
 
@@ -100,8 +124,10 @@ CREATE TABLE `suppliers` (
   `email` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
   `remarks` varchar(255) default NULL,
+  `token` binary(255) default NULL,
   `type` varchar(20) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `UK_nwdngx5sgx1es5qgd9oq05vm9` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -109,10 +135,9 @@ CREATE TABLE `suppliers` (
 --
 
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` (`id`,`address`,`contact_person_name`,`contact_person_phone`,`email`,`name`,`remarks`,`type`) VALUES 
- (1,'Mitford','pantha','424424','mdistiaque56@yahoo.com','IH Traders Co.','eeee','OWN'),
- (2,'HO','pantha','424424','nurse@friendship.ngo','Procurment Division','rteetyety','OWN'),
- (3,'dfds','dsfdsfsdfsd','fsfsdfdsf','fsdfsdf','ssdfs','fsfdsfds','OWN');
+INSERT INTO `suppliers` (`id`,`address`,`contact_person_name`,`contact_person_phone`,`email`,`name`,`remarks`,`token`,`type`) VALUES 
+ (1,'16 Akmol khan road, Mitford','Panta','01685331016','panthaistiaque@gmail.com','IH Traders',NULL,0x61386664646366622D613932332D346465322D393331392D623631363632323735656631000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,'Vendor'),
+ (2,'39 New market, Dhaka','Istiaque','01721672283','mdistiaque56@yahoo.com','Thai Brothers and Co.',NULL,0x31303335616631372D353635312D346434642D383661642D346266653466363430363436000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,'Vendor');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 
 
@@ -126,8 +151,8 @@ CREATE TABLE `user_role` (
   `role_id` int(11) NOT NULL,
   KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
   KEY `FKm01t79r1jd43urtdfwr98po4q` (`id`),
-  CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
-  CONSTRAINT `FKm01t79r1jd43urtdfwr98po4q` FOREIGN KEY (`id`) REFERENCES `users` (`id`)
+  CONSTRAINT `FKm01t79r1jd43urtdfwr98po4q` FOREIGN KEY (`id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -135,6 +160,8 @@ CREATE TABLE `user_role` (
 --
 
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` (`id`,`role_id`) VALUES 
+ (1,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 
 
@@ -159,6 +186,8 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`,`email`,`first_name`,`last_name`,`password`,`phone`) VALUES 
+ (1,'pantha@gmail.com','Pantha','Istiaqe','123','01685331016');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 

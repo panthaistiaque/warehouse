@@ -37,7 +37,7 @@ public class ShipmentService {
             "<td>Product Unit</td>\n" +
             "<td>Qty</td>\n" +
             "</tr>\n" +
-            "ORDER_LIST"+
+            " ORDER_LIST "+
             "</tbody>\n" +
             "</table>\n" +
             "<p></p><br>\n" +
@@ -68,9 +68,22 @@ public class ShipmentService {
 
     public void orderFroward(Integer id) {
         Suppliers suppliers = suppliersService.findById((Integer) shipmentRepo.findOneById(id).get("suppliers_id"));
-        String s = "http://localhost:8080/vendor-singup?tk=" + suppliers.getToken() + " &v=" + String.valueOf(System.currentTimeMillis());
-        emailUtil.manageMail("NewOrdersList", suppliers.getEmail(), s, d.replace("CONTACT_PERSON",suppliers.getContactPersonName()).replace("ORDER_LIST",""));
+        List<Map<String, Object>> mapList = shipmentRepo.findOneOrderDetailsById(id);
+        String temp = "";
+        for (Map<String, Object> obj:mapList) {
+            temp +=  "<tr>\n" +
+                    "<td>"+obj.get("type")+"</td>\n" +
+                    "<td>"+obj.get("name")+"</td>\n" +
+                    "<td>"+obj.get("size")+"</td>\n" +
+                    "<td>"+obj.get("qty")+"</td>\n" +
+                    "</tr>\n" ;
+        }
+        String s = "http://localhost:8080/vendor-singup?tk=" + suppliers.getToken() + "&v=" + String.valueOf(System.currentTimeMillis());
+        String e = d.replace("CONTACT_PERSON",suppliers.getContactPersonName());
+        e = e.replace("ORDER_LIST", temp);
+        e = e.replace("LOGIN_LINK", s);
+        emailUtil.manageMail("NewOrdersList", suppliers.getEmail(), s, e);
 
-        shipmentRepo.orderFroward(id);
+        //shipmentRepo.orderFroward(id);
     }
 }

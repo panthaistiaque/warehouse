@@ -60,6 +60,11 @@ public class ShipmentRepo {
         return jdbcTemplate.queryForMap(sql, id);
     }
 
+    public List<Map<String, Object>> findOneOrderDetailsById(Integer id) {
+        String sql = "SELECT * FROM shipment_details s where active = 1 and shipment_master_id=?";
+        return jdbcTemplate.queryForList(sql, id);
+    }
+
     public void deleteOrders(Integer id) {
         String sql = "update shipment_master set active = 0 where id= ?";
         jdbcTemplate.update(sql, id);
