@@ -26,8 +26,7 @@ public class ShipmentService {
 
     String d = "<font size=\"2\" face=\"Arial,Helvetica,Tahoma\">\n" +
             "Dear MR  CONTACT_PERSON<br><br>\n" +
-            "<p>Your Request for Domestic Transfer has been received and submitted for processing.<br><br>\n" +
-            "Following are the details of the transfer.<br></p>\n" +
+            "<p>The following products are requested to be delivered to our warehouse within the next <b>7</b> days.<br><br></p>\n" +
             "<br><p></p>\n" +
             "<table width=\"517px\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\" bgcolor=\"#FBFCFF\">\n" +
             "<tbody>\n" +
@@ -42,9 +41,8 @@ public class ShipmentService {
             "</table>\n" +
             "<p></p><br>\n" +
             "<p>login link: LOGIN_LINK</p><br>\n" +
-            "Cut off Time for a Domestic transfer is 4:30 pm, Monday to Thursday and Sunday. Any transfer submitted after cut off time or on Friday/Saturday/Public Holiday will be processed next working day.<br><br>\n" +
-            "Please call Phone Banking  on 16233(From Mobile Phone) / +88-09666777111 / +88-02-8332272 if you need any further assistance.<br>Thank you for using Standard Chartered Online Banking.</font><br>\n" +
-            "This email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please delete all copies and notify the sender immediately. You may wish to refer to the incorporation details of Standard Chartered PLC, Standard Chartered Bank and their subsidiaries at https://www.sc.com/en/our-locations. Please refer to https://www.sc.com/en/privacy-policy/ for Standard Chartered Bank’s Privacy Policy.<br>\n";
+            "</font><br>\n" +
+            "This email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please delete all copies and notify the sender immediately. <br>\n";
     @Transactional
     public Map<String, Object> saveShipment(Map<String, Object> shipment) {
         Integer orderMasterId = shipmentRepo.saveShipmentMaster(shipment);
