@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -68,6 +69,29 @@ public class ShipmentCtrl {
         ModelAndView modelAndView = new ModelAndView();
         shipmentService.saveShipment(shipment);
         modelAndView.setViewName("redirect:/all-shipment");
+        return modelAndView;
+    }
+
+    @GetMapping("/vendor-singup")
+    public ModelAndView shopkeeperLogin(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/login")
+        String token = request.getParameter("tk");
+        String validity = request.getParameter("v");
+        String orderId = request.getParameter("i");
+        System.out.println(token+":::"+validity+":::"+orderId);
+        if (token != "" && validity != "") {
+            Long time = Long.valueOf(validity);
+            //            if (System.currentTimeMillis() - time <= 60000 * 5) {//check 5 min. validity
+            if (System.currentTimeMillis() - time <= 86400000 * 7) {//check 7 day validity
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");
+            } else {
+                return modelAndView;
+            }
+        } else {
+            return modelAndView;
+        }
+
         return modelAndView;
     }
 }

@@ -4,6 +4,7 @@ import com.ihit.warehouse.mscproject.shipment.repo.ShipmentRepo;
 import com.ihit.warehouse.mscproject.suppliers.model.Suppliers;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import com.ihit.warehouse.mscproject.util.EmailUtil;
+import com.ihit.warehouse.mscproject.util.Encryption;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class ShipmentService {
             "</tbody>\n" +
             "</table>\n" +
             "<p></p><br>\n" +
-            "<p>login link: LOGIN_LINK</p><br>\n" +
+            "<p>view link: LOGIN_LINK</p><br>\n" +
             "</font><br>\n" +
             "This email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please delete all copies and notify the sender immediately. <br>\n";
     @Transactional
@@ -76,12 +77,12 @@ public class ShipmentService {
                     "<td>"+obj.get("qty")+"</td>\n" +
                     "</tr>\n" ;
         }
-        String s = "http://localhost:8080/vendor-singup?tk=" + suppliers.getToken() + "&v=" + String.valueOf(System.currentTimeMillis());
+        String s = "http://localhost:8080/vendor-singup?tk=" + suppliers.getToken() + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ Encryption.getMd5(String.valueOf(id));
         String e = d.replace("CONTACT_PERSON",suppliers.getContactPersonName());
         e = e.replace("ORDER_LIST", temp);
         e = e.replace("LOGIN_LINK", s);
         emailUtil.manageMail("NewOrdersList", suppliers.getEmail(), s, e);
 
-        //shipmentRepo.orderFroward(id);
+        shipmentRepo.orderFroward(id);
     }
 }

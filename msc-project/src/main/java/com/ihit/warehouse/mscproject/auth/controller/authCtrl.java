@@ -47,23 +47,5 @@ public class authCtrl {
         return "about";
     }
 
-    @GetMapping("/vendor-singup")
-    public String shopkeeperLogin(HttpServletRequest request) {
-        String token = request.getParameter("tk");
-        String validity = request.getParameter("v");
-        System.out.println(token+":::"+validity);
-        if (token != "" && validity != "") {
-            Long time = Long.valueOf(validity);
-            //            if (System.currentTimeMillis() - time <= 60000 * 5) {//check 5 min. validity
-            if (System.currentTimeMillis() - time <= 86400000 * 7) {//check 7 day validity
-//                Pra
-            } else {
-                return "redirect:/login";
-            }
-        } else {
-            return "redirect:/login";
-        }
 
-        return "redirect:/login";
-    }
 }
