@@ -74,4 +74,9 @@ public class ShipmentRepo {
         String sql = "update shipment_master set status=? where id= ?";
         jdbcTemplate.update(sql, Status.FROWARD, id);
     }
+
+    public Map<String, Object> findOneOrderById(String token, String orderId) {
+        String sql = "SELECT s.*  FROM shipment_master s  where active='1' and md5(id) = ? and md5(suppliers_id) = ?";
+        return jdbcTemplate.queryForMap(sql, orderId,token);
+    }
 }

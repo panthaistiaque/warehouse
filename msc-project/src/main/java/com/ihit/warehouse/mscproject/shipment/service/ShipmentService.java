@@ -77,12 +77,19 @@ public class ShipmentService {
                     "<td>"+obj.get("qty")+"</td>\n" +
                     "</tr>\n" ;
         }
-        String s = "http://localhost:8080/vendor-singup?tk=" + suppliers.getToken() + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ Encryption.getMd5(String.valueOf(id));
+        String s = "http://localhost:8080/vendor-singup?tk=" + Encryption.getMd5(String.valueOf(suppliers.getId())) + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ Encryption.getMd5(String.valueOf(id));
         String e = d.replace("CONTACT_PERSON",suppliers.getContactPersonName());
         e = e.replace("ORDER_LIST", temp);
         e = e.replace("LOGIN_LINK", s);
         emailUtil.manageMail("NewOrdersList", suppliers.getEmail(), s, e);
 
         shipmentRepo.orderFroward(id);
+    }
+
+    public Map<String, Object> orderDetails(String token, String orderId) {
+        Map<String, Object> map = shipmentRepo.findOneOrderById(token, orderId);
+        map.put("orderList", shipmentRepo.findOneOrderDetailsById(((Long) map.get("id")).intValue()));
+        System.out.println(map);
+        return map;
     }
 }

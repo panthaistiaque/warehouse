@@ -75,7 +75,7 @@ public class ShipmentCtrl {
     @GetMapping("/vendor-singup")
     public ModelAndView shopkeeperLogin(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/login")
+        modelAndView.setViewName("redirect:/login");
         String token = request.getParameter("tk");
         String validity = request.getParameter("v");
         String orderId = request.getParameter("i");
@@ -84,14 +84,25 @@ public class ShipmentCtrl {
             Long time = Long.valueOf(validity);
             //            if (System.currentTimeMillis() - time <= 60000 * 5) {//check 5 min. validity
             if (System.currentTimeMillis() - time <= 86400000 * 7) {//check 7 day validity
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");
+                User currentUser = new User();
+                currentUser.setFirstName("Dirsat");
+                modelAndView.addObject("user", currentUser);
+                modelAndView.addObject("order", shipmentService.orderDetails(token,orderId));
+                modelAndView.setViewName("shipment/details");
+                return modelAndView;
             } else {
                 return modelAndView;
             }
         } else {
             return modelAndView;
         }
+    }
 
+    @PostMapping("/order-delevary-confirm")
+    public ModelAndView orderDelevaryConfirm(Map<String, Object> shipment) {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(shipment);
+        modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
 }
