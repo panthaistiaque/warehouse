@@ -4,12 +4,12 @@ import com.ihit.warehouse.mscproject.shipment.service.ShipmentService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,10 +98,10 @@ public class ShipmentCtrl {
         }
     }
 
-    @PostMapping("/order-delevary-confirm")
-    public ModelAndView orderDelevaryConfirm(Map<String, Object> shipment) {
+    @PostMapping(value = "/order-delevary-confirm")
+    public ModelAndView orderDelevaryConfirm(@RequestParam Map<String, Object> order) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(shipment);
+        System.out.println(order);
         modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
