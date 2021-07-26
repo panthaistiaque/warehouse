@@ -4,14 +4,15 @@ import com.ihit.warehouse.mscproject.shipment.service.ShipmentService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -67,6 +68,40 @@ public class ShipmentCtrl {
     public ModelAndView saveShipment(@RequestBody Map<String, Object> shipment) {
         ModelAndView modelAndView = new ModelAndView();
         shipmentService.saveShipment(shipment);
+        modelAndView.setViewName("redirect:/all-shipment");
+        return modelAndView;
+    }
+
+    @GetMapping("/vendor-singup")
+    public ModelAndView shopkeeperLogin(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/login");
+        String token = request.getParameter("tk");
+        String validity = request.getParameter("v");
+        String orderId = request.getParameter("i");
+        System.out.println(token+":::"+validity+":::"+orderId);
+        if (token != "" && validity != "") {
+            Long time = Long.valueOf(validity);
+            //            if (System.currentTimeMillis() - time <= 60000 * 5) {//check 5 min. validity
+            if (System.currentTimeMillis() - time <= 86400000 * 7) {//check 7 day validity
+                User currentUser = new User();
+                currentUser.setFirstName("Dirsat");
+                modelAndView.addObject("user", currentUser);
+                modelAndView.addObject("order", shipmentService.orderDetails(token,orderId));
+                modelAndView.setViewName("shipment/details");
+                return modelAndView;
+            } else {
+                return modelAndView;
+            }
+        } else {
+            return modelAndView;
+        }
+    }
+
+    @PostMapping(value = "/order-delevary-confirm")
+    public ModelAndView orderDelevaryConfirm(@RequestParam Map<String, Object> order) {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(order);
         modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }
