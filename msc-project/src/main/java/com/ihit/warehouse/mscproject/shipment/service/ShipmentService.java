@@ -92,4 +92,8 @@ public class ShipmentService {
         System.out.println(map);
         return map;
     }
+
+    public void saveRecive(Map<String, Object> order) {
+        shipmentRepo.saveReceivedMaster(order);
+    }
 }

@@ -4,12 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ihit.warehouse.mscproject.systemAdmin.DataBind.ActiviteyTrack;
+import com.ihit.warehouse.mscproject.systemAdmin.Service.ActiviteyTrackService;
+import com.ihit.warehouse.mscproject.users.DataBind.User;
+import com.ihit.warehouse.mscproject.util.DateUtil;
+import com.ihit.warehouse.mscproject.util.Status;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -27,6 +36,10 @@ import java.util.*;
 public class LogCtrl {
     @Value("${application.log.path}")
     String logPath;
+
+    @Autowired
+    ActiviteyTrackService activiteyTrackService;
+
     @ResponseBody
     @GetMapping(value = "/view")
     public String getLog(HttpServletRequest request) {
@@ -62,35 +75,35 @@ public class LogCtrl {
                         return o2.compareTo(o1);
                     }
                 });
-                String value="", date="", time="";
+                String value = "", date = "", time = "";
                 for (String log : logLines) {
                     sb.append("<tr>");
                     jsonObject = new JsonParser().parse(log).getAsJsonObject();
-                    value=(jsonObject.get("ts").toString().length()>2)?jsonObject.get("ts").toString().substring(1,jsonObject.get("ts").toString().length()-1):null;
-                    date=(value != null)?value.substring(0,10):null;
-                    time=(value != null)?value.substring(11,23):null;
+                    value = (jsonObject.get("ts").toString().length() > 2) ? jsonObject.get("ts").toString().substring(1, jsonObject.get("ts").toString().length() - 1) : null;
+                    date = (value != null) ? value.substring(0, 10) : null;
+                    time = (value != null) ? value.substring(11, 23) : null;
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: center;'>");
                     sb.append(date);
                     sb.append("</td>");
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: center;'>");
                     sb.append(time);
                     sb.append("</td>");
-                    value=(jsonObject.get("level").toString().length()>2)?jsonObject.get("level").toString().substring(1,jsonObject.get("level").toString().length()-1):null;
+                    value = (jsonObject.get("level").toString().length() > 2) ? jsonObject.get("level").toString().substring(1, jsonObject.get("level").toString().length() - 1) : null;
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: center;'>");
                     sb.append(value);
                     sb.append("</td>");
-                    value=(jsonObject.get("class").toString().length()>2)?jsonObject.get("class").toString().substring(1,jsonObject.get("class").toString().length()-1):null;
+                    value = (jsonObject.get("class").toString().length() > 2) ? jsonObject.get("class").toString().substring(1, jsonObject.get("class").toString().length() - 1) : null;
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: center;'>");
                     sb.append(value);
                     sb.append("</td>");
-                    value=(jsonObject.get("method").toString().length()>2)?jsonObject.get("method").toString().substring(1,jsonObject.get("method").toString().length()-1):null;
+                    value = (jsonObject.get("method").toString().length() > 2) ? jsonObject.get("method").toString().substring(1, jsonObject.get("method").toString().length() - 1) : null;
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: center;'>");
                     sb.append(value);
                     sb.append("</td>");
                     sb.append("<td style='border: 1px solid #ddd;padding: 8px;text-align: left;'>");
-                    value=jsonObject.get("msg").toString();
-                    value=(value.substring(1, value.length()-1).equals("{}"))? jsonObject.get("stack").toString().replace("\\r\\n", "</br>").replace("\\n", "</br>").replace("\\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").replace("(", "(<a href=#>").replace(")", "</a>)").replace("'", "") : value.substring(1, value.length()-1);
-                    sb.append("<button id='"+value+"' onclick=show(this.id);>Show Details</button>");
+                    value = jsonObject.get("msg").toString();
+                    value = (value.substring(1, value.length() - 1).equals("{}")) ? jsonObject.get("stack").toString().replace("\\r\\n", "</br>").replace("\\n", "</br>").replace("\\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").replace("(", "(<a href=#>").replace(")", "</a>)").replace("'", "") : value.substring(1, value.length() - 1);
+                    sb.append("<button id='" + value + "' onclick=show(this.id);>Show Details</button>");
                     sb.append("</td>");
                     sb.append("</tr>");
                 }
@@ -192,6 +205,7 @@ public class LogCtrl {
         }
         return "";
     }
+
     @GetMapping("/syslog")
     public ModelAndView syslog(ModelAndView modelAndView) throws IOException {
         List<Map<String, Object>> logModelList = new ArrayList<>();
@@ -212,7 +226,7 @@ public class LogCtrl {
         ObjectMapper mapper = new ObjectMapper();
         for (String s : logLines) {
             Map<String, Object> p = mapper.readValue(s, Map.class);
-            p.put("id",i);
+            p.put("id", i);
             logModelList.add(p);
             i++;
         }
@@ -222,7 +236,8 @@ public class LogCtrl {
         modelAndView.setViewName("log/log");
         return modelAndView;
     }
-//    @ResponseBody
+
+    //    @ResponseBody
 //    @GetMapping("/syslog/{id}")
 //    public LogModel getLogDetails(@PathVariable Integer id){
 //        for (LogModel logModel: logModelList) {
@@ -232,4 +247,20 @@ public class LogCtrl {
 //        }
 //        return null;
 //    }
+    @ResponseBody
+    @PostMapping("/activity")
+    public Map<String, Object> getLogDetails(HttpServletRequest request, HttpSession session) {
+        ActiviteyTrack activiteyTrack = new ActiviteyTrack();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", request.getParameter("code"));
+        map.put("location", request.getParameter("location"));
+        activiteyTrack.setCode(Integer.valueOf(request.getParameter("code")));
+        activiteyTrack.setUrl(request.getParameter("location"));
+        activiteyTrack.setSession(session.getId());
+        activiteyTrack.setCreatedOn(DateUtil.currentDateTime());
+        SecurityContextImpl map1 = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        activiteyTrack.setUser(1);
+        activiteyTrackService.save(activiteyTrack);
+        return map;
+    }
 }

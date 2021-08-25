@@ -99,9 +99,11 @@ public class ShipmentCtrl {
     }
 
     @PostMapping(value = "/order-delevary-confirm")
-    public ModelAndView orderDelevaryConfirm(@RequestParam Map<String, Object> order) {
+    public ModelAndView orderDelevaryConfirm(@RequestBody Map<String, Object> order) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.println(order);
+        System.out.println(order.get("orderList"));
+        shipmentService.saveRecive(order);
         modelAndView.setViewName("redirect:/all-shipment");
         return modelAndView;
     }

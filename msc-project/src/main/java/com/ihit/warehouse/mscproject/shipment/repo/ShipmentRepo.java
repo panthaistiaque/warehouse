@@ -76,7 +76,10 @@ public class ShipmentRepo {
     }
 
     public Map<String, Object> findOneOrderById(String token, String orderId) {
-        String sql = "SELECT s.*  FROM shipment_master s  where active='1' and md5(id) = ? and md5(suppliers_id) = ?";
+        String sql = "SELECT s.*,su.*  FROM shipment_master s left join suppliers su on su.id = s.suppliers_id  where active='1' and md5(s.id) = ? and md5(suppliers_id) = ?";
         return jdbcTemplate.queryForMap(sql, orderId,token);
+    }
+
+    public void saveReceivedMaster(Map<String, Object> order) {
     }
 }

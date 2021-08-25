@@ -9,4 +9,14 @@
         </div>
     </div>
     <a onclick="window.history.back();" class="btn btn-sx btn-info">Back</a>
+    <script>
+        $(document).ready(function(){
+            $.post("/log/activity",
+                    {
+                        code: "500",
+                        location:window.location.href
+                    }
+            );
+        });
+    </script>
 </div>
