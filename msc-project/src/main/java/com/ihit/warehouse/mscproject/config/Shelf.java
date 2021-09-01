@@ -23,4 +23,8 @@ public class Shelf {
     private Integer slotNumber;
     @Column(length = 10)
     private String shortName;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelf_id",referencedColumnName = "id")
+    List<Slot> slots;
 }

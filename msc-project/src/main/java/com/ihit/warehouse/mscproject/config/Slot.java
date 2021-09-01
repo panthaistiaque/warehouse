@@ -17,7 +17,7 @@ public class Slot {
     @Column(length = 10)
     private String shortName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Shelf shelf;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private Shelf shelf;
 
 }
