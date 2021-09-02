@@ -29,11 +29,11 @@ public class authCtrl {
         return model;
     }
 
-    @ResponseBody
-    @GetMapping(value = "/home")
-    public List home() {
-        return Arrays.asList("home", "page", "test");
-    }
+//    @ResponseBody
+//    @GetMapping(value = "/home")
+//    public List home() {
+//        return Arrays.asList("home", "page", "test");
+//    }
 
     @GetMapping("/register")
     public ModelAndView register(final ModelAndView model) {
