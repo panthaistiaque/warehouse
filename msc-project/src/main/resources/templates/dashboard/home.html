@@ -3,7 +3,6 @@
       layout:decorate="~{layout/layout}">
 
 <div layout:fragment="content">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <style>
         .vdvv {
             border: 1px solid #000;
@@ -13,7 +12,9 @@
             border-radius: 3px;
         }
         .col-md-1 {
-            width: 11.333%;
+            width: 11.333% !important;
+            height: 35px;
+            padding-left:0;
         }
     </style>
     <div class="content">
@@ -41,7 +42,7 @@
                 console.log(status);
                 var str= "";
                 for(i=0; i<data.length; i++){
-                    str +="<div class='col-md-1 vdvv'><i class='fas fa-suitcase-rolling'></i><b>"+data[i].name+"</b></div>";
+                    str +="<div class='col-md-1 vdvv progress'   ><div class='progress-bar progress-bar-warning' style='width:"+(16.67*2)+"%;'><b class='center-block' style='color: black'>"+data[i].name+"</b></div></div>";
                 }
                 $("#desh_content").append(str);
             } );
