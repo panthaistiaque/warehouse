@@ -1,6 +1,7 @@
 package com.ihit.warehouse.mscproject.systemAdmin.DataBind;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 
@@ -23,6 +24,7 @@ public class ActiviteyTrack {
     @Column(name="type", columnDefinition="enum('NOTI','SYS_NOTI')")
     private String type;
     private String session;
+
 
 
 }

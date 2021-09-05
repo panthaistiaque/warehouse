@@ -33,10 +33,10 @@
                             <td th:text="${listObj.email}">Phone</td>
                             <td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">E-mail</td>
                             <td>
-                                <button class="btn btn-success btn-xs">Edit</button>
-                                <!--<form th:action="@{/deleteUser/}+${listObj.id}" th:method="POST">-->
-                                    <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
-                                <!--</form>-->
+                                <a th:href="@{'/editSuppliers/'+${listObj.id}} " class="btn btn-success btn-xs">Edit</a>
+                                <form th:action="@{'/deleteSuppliers/'+${listObj.id}}" th:method="POST">
+                                <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
+                                </form>
 
                             </td>
                         </tr>

@@ -2,6 +2,8 @@ package com.ihit.warehouse.mscproject.suppliers.service;
 
 import com.ihit.warehouse.mscproject.suppliers.model.Suppliers;
 import com.ihit.warehouse.mscproject.suppliers.repo.SuppliersRepo;
+import com.ihit.warehouse.mscproject.systemAdmin.DataBind.ActiviteyTrack;
+import com.ihit.warehouse.mscproject.systemAdmin.Service.ActiviteyTrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ public class SuppliersService {
     SuppliersRepo suppliersRepo;
 
 
+
     public Suppliers save(Suppliers suppliers) {
         return suppliersRepo.save(suppliers);
     }
@@ -24,5 +27,8 @@ public class SuppliersService {
     }
     public Suppliers findById(Integer id){
         return suppliersRepo.findById(id).get();
+    }
+    public void deleteById(Integer id){
+        suppliersRepo.deleteById(id);
     }
 }
