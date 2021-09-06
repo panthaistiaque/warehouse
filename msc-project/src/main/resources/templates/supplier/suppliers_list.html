@@ -17,7 +17,7 @@
         <div class="main-content">
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-responsive table-condensed">
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
@@ -31,13 +31,17 @@
                             <td th:text="${listObj.name }">Name</td>
                             <td th:text="${listObj.address}">Role</td>
                             <td th:text="${listObj.email}">Phone</td>
-                            <td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">E-mail</td>
+                            <td th:utext="'Name : '+${listObj.contactPersonName+'<br/> Phone :'+listObj.contactPersonPhone}">
+                                E-mail
+                            </td>
                             <td>
-                                <a th:href="@{'/editSuppliers/'+${listObj.id}} " class="btn btn-success btn-xs">Edit</a>
-                                <form th:action="@{'/deleteSuppliers/'+${listObj.id}}" th:method="POST">
-                                <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
-                                </form>
-
+                                <div class="btn-group">
+                                    <a th:href="@{'/editSuppliers/'+${listObj.id}} "
+                                       class="btn btn-success btn-xs">Edit</a>
+                                    <form th:action="@{'/deleteSuppliers/'+${listObj.id}}" th:method="POST">
+                                        <button type="submit" class="btn btn-danger btn-xs btnDelete">Delete</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     </table>

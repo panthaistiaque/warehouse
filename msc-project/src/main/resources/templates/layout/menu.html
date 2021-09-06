@@ -51,42 +51,55 @@
                 <li><a href="reset-password.html"><span class="fa fa-caret-right"></span> Reset Password</a></li>
             </ul>
         </li>-->
-
+        <li><a href="/home" class="nav-header"><i class="fa fa-fw fa-tachometer"></i>Dashboard</a></li>
         <li sec:authorize="hasRole('ROLE_SM')">
-            <a href="#" data-target=".user-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a data-target=".user-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-user"></i> User<i class="fa fa-collapse"></i>
             </a>
         </li>
         <li sec:authorize="hasRole('ROLE_SM')">
             <ul class="user-menu nav nav-list collapse">
-                <li><a href="new-user"><span class="fa fa-caret-right"></span>New User </a></li>
-                <li><a href="user-list"><span class="fa fa-caret-right"></span> User List</a></li>
+                <li><a href="/new-user"><span class="fa fa-caret-right"></span>New User </a></li>
+                <li><a href="/user-list"><span class="fa fa-caret-right"></span> User List</a></li>
+            </ul>
+        </li>
+        <li sec:authorize="hasRole('ROLE_SM')">
+            <a  data-target=".product-menu" class="nav-header collapsed" data-toggle="collapse">
+                <i class="fa fa-fw fa-user"></i>Product Entry<i class="fa fa-collapse"></i>
+            </a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_SM')">
+            <ul class="product-menu nav nav-list collapse">
+                <li><a href="/brand_form"><span class="fa fa-caret-right"></span>New Brand </a></li>
+                <li><a href="/brand_list"><span class="fa fa-caret-right"></span> Brand List</a></li>
+                <li><a href="/category_form"><span class="fa fa-caret-right"></span>New Category</a></li>
+                <li><a href="/category_list"><span class="fa fa-caret-right"></span>Category List</a></li>
             </ul>
         </li>
         <li>
-            <a href="#" data-target=".suppliers-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a  data-target=".suppliers-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-list"></i> Suppliers<i class="fa fa-collapse"></i>
             </a>
         </li>
         <li>
             <ul class="suppliers-menu nav nav-list collapse">
-                <li><a href="new-supplier"><span class="fa fa-caret-right"></span>New Suppliers</a></li>
-                <li><a href="supplier-list"><span class="fa fa-caret-right"></span> Suppliers List</a></li>
+                <li><a href="/new-supplier"><span class="fa fa-caret-right"></span>New Suppliers</a></li>
+                <li><a href="/supplier-list"><span class="fa fa-caret-right"></span> Suppliers List</a></li>
             </ul>
         </li>
         <li>
-            <a href="#" data-target=".Shipment-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a  data-target=".Shipment-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-truck"></i> Shipment<i class="fa fa-collapse"></i>
             </a>
         </li>
         <li>
             <ul class="Shipment-menu nav nav-list collapse">
-                <li><a href="new-shipment"><span class="fa fa-caret-right"></span>Shipment Request</a></li>
-                <li><a href="all-shipment"><span class="fa fa-caret-right"></span>Shipment List</a></li>
+                <li><a href="/new-shipment"><span class="fa fa-caret-right"></span>Shipment Request</a></li>
+                <li><a href="/all-shipment"><span class="fa fa-caret-right"></span>Shipment List</a></li>
             </ul>
         </li>
         <li>
-            <a href="#" data-target=".Goods-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a data-target=".Goods-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-list"></i>Goods<i class="fa fa-collapse"></i>
             </a>
         </li>

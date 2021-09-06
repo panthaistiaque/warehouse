@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Suppliers User</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="new-supplier">Suppliers</a></li>
+                <li class="active">Suppliers Details</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-6 center">
+                    <br>
+                    <div id="home">
+                        <form th:action="@{/saveBrand}" th:object="${brand}"  th:method="POST">
+                            <input th:name="id" th:value="*{id}" type="hidden" class="form-control">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input th:name="name" th:value="*{name}" type="text" class="form-control">
+                            </div>
+                            <div class="btn-toolbar list-toolbar">
+                                <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-save"></i> Save</button>
+                                <a  th:href="@{'/brand_list'}" class="btn btn-sm btn-info"><i class="fa fa-back"></i> Back</a>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

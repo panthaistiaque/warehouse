@@ -14,7 +14,13 @@ public class Status {
         public static final String  ERROR_404 = "Try to reach on a invalid URL";
         public static final String  ERROR_403 = "User try to reach unauthorized URL";
         public static final String  ERROR_500 = "Unexpected error";
-    }public class NOTIFICATION_TYPE{
+    }
+    public class NOTIFICATION_MESSAGE{
+        public static final String  SUPPLIERS_INSERT = "New Supplier information created";
+        public static final String  SUPPLIERS_UPDATE = "Supplier information updated";
+        public static final String  SUPPLIERS_DELETE = "Delete Supplier entry";
+    }
+    public class NOTIFICATION_TYPE{
         public static final String  USER_NOTIFICATION = "NOTI";
         public static final String  SYS_NOTIFICATION = "SYS_NOTI";
     }

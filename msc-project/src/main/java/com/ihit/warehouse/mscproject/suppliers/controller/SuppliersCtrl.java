@@ -51,9 +51,9 @@ public class SuppliersCtrl {
     @PostMapping("/saveSuppliers")
     public ModelAndView saveUser(final ModelAndView model, Suppliers suppliers, @AuthenticationPrincipal User currentUser, HttpServletRequest request, HttpSession session) {
         //--------------------------------------
-        String s = "New Supplier information created";
+        String s = Status.NOTIFICATION_MESSAGE.SUPPLIERS_INSERT;
         if(suppliers.getId()!=null){
-            s = "Supplier information updated";
+            s = Status.NOTIFICATION_MESSAGE.SUPPLIERS_UPDATE;
         }
 
         ActiviteyTrack track = new ActiviteyTrack();
@@ -89,7 +89,7 @@ public class SuppliersCtrl {
         track.setCode(HttpStatus.OK.value());
         track.setUrl(request.getRequestURI());
         track.setSession(session.getId());
-        track.setMessage("Delete Supplier entry");
+        track.setMessage(Status.NOTIFICATION_MESSAGE.SUPPLIERS_DELETE);
         track.setCreatedOn(DateUtil.currentDateTime());
         activiteyTrackService.save(track);
         ///---------------------------------------

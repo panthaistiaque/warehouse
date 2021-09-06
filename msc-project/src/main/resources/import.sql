@@ -7,8 +7,22 @@ INSERT INTO role (role_name) VALUES ('ROLE_S');
 insert into users(email, first_name, last_name, password, phone) values ('pantha@gmail.com', 'Pantha', 'Istiaqe','123', '01685331016');
 insert into user_role(id, role_id) values (1,1);
 
-insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('16 Akmol khan road, Mitford', 'Panta', '01685331016', 'panthaistiaque@gmail.com', 'IH Traders', null, 'Vendor','a8fddcfb-a923-4de2-9319-b61662275ef1');
-insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('39 New market, Dhaka', 'Istiaque', '01721672283', 'mdistiaque56@yahoo.com', 'Thai Brothers and Co.', null, 'Vendor','1035af17-5651-4d4d-86ad-4bfe4f640646');
+insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('16 Akmol khan road, Mitford', 'Panta', '01685331016', 'panthaistiaque@gmail.com', 'IH Traders', null, 'VENDOR','a8fddcfb-a923-4de2-9319-b61662275ef1');
+insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('39 New market, Dhaka', 'Istiaque', '01721672283', 'mdistiaque56@yahoo.com', 'Thai Brothers and Co.', null, 'VENDOR','1035af17-5651-4d4d-86ad-4bfe4f640646');
+
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (1, 'Unilever',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (2, 'PRAN-RFL',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (3, 'AKIJE',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (4, 'MEGHNA',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (5, 'ACI',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (6, 'OLYMPAC',NOW(), TRUE);
+
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (1, 'Computer',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (2, 'Oil',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (3, 'Toiletries',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (4, 'Lathers',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (5, 'Dry Food',NOW(), TRUE);
+
 
 insert into shelf(id, name, slot_number) values (1, 'AA', 6);
 insert into shelf(id, name, slot_number) values (2, 'AB', 6);
