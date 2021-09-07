@@ -64,6 +64,17 @@
             </ul>
         </li>
         <li sec:authorize="hasRole('ROLE_SM')">
+            <a data-target=".order-menu" class="nav-header collapsed" data-toggle="collapse">
+                <i class="fa fa-fw fa-user"></i>Order<i class="fa fa-collapse"></i>
+            </a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_SM')">
+            <ul class="order-menu nav nav-list collapse">
+                <li><a href="/order_form"><span class="fa fa-caret-right"></span>New Order </a></li>
+                <li><a href="/order-list"><span class="fa fa-caret-right"></span> Order List</a></li>
+            </ul>
+        </li>
+        <li sec:authorize="hasRole('ROLE_SM')">
             <a  data-target=".product-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-user"></i>Product Entry<i class="fa fa-collapse"></i>
             </a>

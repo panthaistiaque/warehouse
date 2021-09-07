@@ -1,0 +1,96 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">New Order</h1>
+            <ul class="breadcrumb">
+                <li>Order</li>
+                <li class="active">New Order</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12 center">
+                    <br>
+                    <div id="home">
+                        <form th:action="@{/saveBrand}" th:object="${order}" th:method="POST">
+                            <input th:name="id" th:value="*{id}" type="hidden" class="form-control">
+                            <table class="table ">
+                                <tr>
+                                    <td>Request Date</td>
+                                    <td><input id="requestDate" class="form-control" type="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Required Date</td>
+                                    <td><input id="requiredDate" class="form-control" type="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Request To</td>
+                                    <td>
+                                        <div th:if="${suppliersList != null && !#lists.isEmpty(suppliersList)}"
+                                             th:remove="tag">
+                                            <select class="form-control" id="supplier" name="supplier">
+                                                <option style="display: none" value="">Select one supplier</option>
+                                                <option th:each="supplier : ${suppliersList}"
+                                                        th:value="${supplier.id}"
+                                                        th:text="${supplier.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div th:if="${suppliersList == null || #lists.isEmpty(suppliersList)}">
+                                            <div  >No Supplier were found, please create some <a href="/new-supplier">Supplier Name</a> first</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Note</td>
+                                    <td>
+                                        <textarea class="form-control"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="btn-toolbar list-toolbar">
+                                <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-save"></i> Save
+                                </button>
+                                <a th:href="@{'/brand_list'}" class="btn btn-sm btn-info"><i class="fa fa-back"></i>
+                                    Back</a>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#requestDate").datepicker({
+                dateFormat: "yy-mm-dd",
+                defaultDate: +0
+            });
+            $("#requiredDate").datepicker({
+                dateFormat: "yy-mm-dd",
+            });
+        });
+    </script>
+</div>
