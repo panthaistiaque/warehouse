@@ -42,7 +42,7 @@
                 console.log(status);
                 var str= "";
                 for(i=0; i<data.length; i++){
-                    str +="<div class='col-md-1 vdvv progress'   ><div class='progress-bar progress-bar-warning' style='width:"+(16.67*2)+"%;'><b class='center-block' style='color: black'>"+data[i].name+"</b></div></div>";
+                    str +="<div class='col-md-1 vdvv progress'   ><div class='progress-bar progress-bar-warning' style='width:"+((100/data[i].slotNumber)*4)+"%;'><b class='center-block' style='color: black'>"+data[i].name+"</b></div></div>";
                 }
                 $("#desh_content").append(str);
             } );

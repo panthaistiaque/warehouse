@@ -26,7 +26,7 @@ public class ShipmentCtrl {
     SuppliersService suppliersService;
 
     @GetMapping("/new-shipment")
-    public ModelAndView newShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser) {
+    public ModelAndView newShipment(final ModelAndView modelAndView, @AuthenticationPrincipal User currentUser, @RequestParam Map<String, String> req) {
         modelAndView.addObject("suppliersList", suppliersService.findAll());
         modelAndView.addObject("user", currentUser);
         modelAndView.setViewName("shipment/new_shipment_form");

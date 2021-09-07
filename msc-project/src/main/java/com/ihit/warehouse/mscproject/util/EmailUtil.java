@@ -1,12 +1,17 @@
 package com.ihit.warehouse.mscproject.util;
 
+import com.ihit.warehouse.mscproject.systemAdmin.DataBind.ActiviteyTrack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
+import sun.security.krb5.internal.ccache.CredentialsCache;
 
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by User on 3/21/2021.

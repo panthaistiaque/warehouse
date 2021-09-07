@@ -1,0 +1,76 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Category List</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Product</a></li>
+                <li><a>Category</a></li>
+                <li class="active">Category List</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">SL</th>
+                            <th class="col-md-6">Name</th>
+                            <th class="col-md-2">Last Edit</th>
+                            <th class="col-md-1">Active</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="listObj:${list}">
+                            <td th:text="${listObj.id}"></td>
+                            <td th:text="${listObj.name }"></td>
+                            <td th:text="${#dates.format(listObj.createdOn, 'dd MMM yyyy, hh:mm a')}"></td>
+                            <td >
+                                <div th:switch="${listObj.isActive}" th:remove="tag">
+                                    <span th:case="false"><i class="fa fa-remove" style="color:red">&#xf00d;</i></span>
+                                    <span th:case="true"><i class="fa fa-check" style="color:green"></i></span>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"><span
+                                            class="glyphicon glyphicon-trash"></span></a>
+                                    <a th:href="@{'/get-unit/'+${listObj.id}}" class="btn btn-sm btn-default"><span
+                                            class="glyphicon glyphicon-edit"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".brand-deactivate").click(function(){
+//                alert($(this).attr('data'));
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/unit_deactive/"+id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            toastr.options.positionClass = 'toast-top-center';
+                            toastr.success('Update complete');
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</div>
