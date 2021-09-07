@@ -17,7 +17,9 @@ public class CategoryService {
     public List getAll() {
         return categoryRepo.findAll();
     }
-
+    public List getAllActiveCategory(boolean isActive) {
+        return categoryRepo.findByIsActive(isActive);
+    }
     public void deactive(Integer id) {
         CategoryModel model =  categoryRepo.getOne(id);
         model.setIsActive(!model.getIsActive());

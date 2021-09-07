@@ -24,8 +24,14 @@ public class UserService {
     @Transactional
     public User save(User user) {
 
-        if (user.getRole() != null) {
-            Role r = roleRepo.findByRoleName(user.getRole());
+//        if (user.getRole() != null) {
+//            Role r = roleRepo.findByRoleName(user.getRole());
+//            List<Role> list = new ArrayList<>();
+//            list.add(r);
+//            user.setRoleList(list);
+//        }
+        for (Role role: user.getRoleList()) {
+            Role r = roleRepo.findByRoleName(role.getRoleName());
             List<Role> list = new ArrayList<>();
             list.add(r);
             user.setRoleList(list);
@@ -40,5 +46,9 @@ public class UserService {
 
     public void deleteById(Integer id) {
         userRepo.deleteById(id);
+    }
+
+    public User getOne(Integer id) {
+        return userRepo.getOne(id);
     }
 }

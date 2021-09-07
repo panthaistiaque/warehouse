@@ -14,12 +14,16 @@ public class BrandService {
     @Autowired
     private BrandRepo brandRepo;
 
-    public List getAll(){
+    public List getAll() {
         return brandRepo.findAll();
     }
 
+    public List getAllActiveBrand(boolean isActive) {
+        return brandRepo.findByIsActive(isActive);
+    }
+
     public void deactive(Integer id) {
-        BrandModel model =  brandRepo.getOne(id);
+        BrandModel model = brandRepo.getOne(id);
         model.setIsActive(!model.getIsActive());
         model.setCreatedOn(new Date());
         brandRepo.save(model);

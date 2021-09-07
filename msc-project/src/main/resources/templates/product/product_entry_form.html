@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Product</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li><a href="new-supplier">Product</a></li>
+                <li class="active">Product Details</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-6 center">
+                    <br>
+                    <div id="home">
+                        <form th:action="@{/saveProduct}" th:object="${product}" th:method="POST">
+                            <input th:name="id" th:value="*{id}" type="hidden" class="form-control">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input th:name="name" th:value="*{name}" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Category Name</label>
+                                <div th:if="${categoryList != null && !#lists.isEmpty(categoryList)}" th:remove="tag">
+                                    <select th:field="*{category}" class="form-control" required>
+                                        <option value="" style="display: none">Select One</option>
+                                        <option th:each="dropDownItem : ${categoryList}"
+                                                th:value="${dropDownItem.id}"
+                                                th:text="${dropDownItem.name}"/>
+                                    </select>
+                                </div>
+                                <div th:if="${categoryList == null || #lists.isEmpty(categoryList)}">
+                                    <div  >No Category were found, please create some <a href="/category_list">Category Name</a> first</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <div th:if="${brandList != null && !#lists.isEmpty(brandList)}" th:remove="tag">
+                                    <select th:field="*{brand}" class="form-control" required>
+                                        <option value="" style="display: none">Select One</option>
+                                        <option th:each="dropDownItem : ${brandList}"
+                                                th:value="${dropDownItem.id}"
+                                                th:text="${dropDownItem.name}"/>
+                                    </select>
+                                </div>
+                                <div th:if="${brandList == null || #lists.isEmpty(brandList)}">
+                                    <a href="/brand_form" style="color: red">No Company were found, please create some first Brand Name</a>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar list-toolbar">
+                                <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-save"></i> Save
+                                </button>
+                                <a th:href="@{'/unit_list'}" class="btn btn-sm btn-info"><i class="fa fa-back"></i> Back</a>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

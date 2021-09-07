@@ -1,5 +1,6 @@
 package com.ihit.warehouse.mscproject.users.controllar;
 
+import com.ihit.warehouse.mscproject.config.AppProperty;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
 import com.ihit.warehouse.mscproject.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +15,27 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by User on 2/21/2021.
  */
 @Controller
-public class UserCtrl {
+public class UserCtrl extends AppProperty {
     @Autowired
     UserService userService;
     @GetMapping("/new-user")
-    public ModelAndView newUser(final ModelAndView model, @AuthenticationPrincipal User currentUser) {
-        model.addObject("user", new User());
-        model.addObject("user", currentUser);
+    public ModelAndView newUser(final ModelAndView model) {
+        model.addObject("newuser", new User());
+        model.setViewName("users/new_entry_form");
+        return model;
+    }
+
+    @GetMapping("/editUser/{id}")
+    public ModelAndView editUser(final ModelAndView model,@PathVariable("id") Integer id) {
+        User user = userService.getOne(id);
+        model.addObject("newuser", user);
         model.setViewName("users/new_entry_form");
         return model;
     }
 
     @GetMapping("/user-list")
-    public ModelAndView userList(final ModelAndView model, @AuthenticationPrincipal User currentUser) {
+    public ModelAndView userList(final ModelAndView model) {
         model.addObject("list", userService.findAll());
-        model.addObject("user", currentUser);
         model.setViewName("users/userList");
         return model;
     }
