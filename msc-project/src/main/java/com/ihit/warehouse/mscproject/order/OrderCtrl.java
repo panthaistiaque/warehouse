@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by user on 9/7/2021.
  */
@@ -17,7 +20,16 @@ public class OrderCtrl extends AppProperty {
     SuppliersService suppliersService;
     @GetMapping(value = "/order_form")
     private ModelAndView getBrand(ModelAndView modelAndView){
-        modelAndView.addObject("order",new Order());
+        OrderDtl order =new OrderDtl();
+        order.setOrderQty(2);
+        OrderDtl order2 =new OrderDtl();
+        order2.setOrderQty(4);
+        List<OrderDtl> dtls = new ArrayList<>();
+        dtls.add(order);
+        dtls.add(order2);
+        Order order1 = new Order();
+        order1.setDtl(dtls);
+        modelAndView.addObject("order",order1);
         modelAndView.addObject("suppliersList",suppliersService.findAll());
         modelAndView.setViewName("order/order_entry_form");
         return modelAndView;

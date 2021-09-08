@@ -3,6 +3,11 @@
       layout:decorate="~{layout/layout}">
 
 <div layout:fragment="content">
+    <style>
+        .sn {
+            width: 10px;
+        }
+    </style>
     <div class="content">
         <div class="header">
 
@@ -18,23 +23,25 @@
                 <div class="col-md-12 center">
                     <br>
                     <div id="home">
-                        <form th:action="@{/saveBrand}" th:object="${order}" th:method="POST">
-                            <input th:name="id" th:value="*{id}" type="hidden" class="form-control">
+                        <form th:action="@{/saveBrand}" th:method="POST">
+                            <input name="id" type="hidden" class="form-control">
                             <table class="table ">
                                 <tr>
                                     <td>Request Date</td>
-                                    <td><input id="requestDate" class="form-control" type="text"/></td>
+                                    <td><input id="requestDate" name="requestDate" class="form-control" type="text"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Required Date</td>
-                                    <td><input id="requiredDate" class="form-control" type="text"/></td>
+                                    <td><input id="requiredDate" name="requiredDate" class="form-control" type="text"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Request To</td>
                                     <td>
                                         <div th:if="${suppliersList != null && !#lists.isEmpty(suppliersList)}"
                                              th:remove="tag">
-                                            <select class="form-control" id="supplier" name="supplier">
+                                            <select class="form-control" name="suppliers" id="suppliers">
                                                 <option style="display: none" value="">Select one supplier</option>
                                                 <option th:each="supplier : ${suppliersList}"
                                                         th:value="${supplier.id}"
@@ -43,26 +50,46 @@
                                             </select>
                                         </div>
                                         <div th:if="${suppliersList == null || #lists.isEmpty(suppliersList)}">
-                                            <div  >No Supplier were found, please create some <a href="/new-supplier">Supplier Name</a> first</div>
+                                            <div>No Supplier were found, please create some <a href="/new-supplier">Supplier
+                                                Name</a> first
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Note</td>
                                     <td>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea name="note" class="form-control"></textarea>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td colspan="2">
-                                        <table>
+                                        <table id="tbl_posts" class="table table-bordered">
+                                            <thead>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <th class="sn">SL</th>
+                                                <th>Category</th>
+                                                <th>Product</th>
+                                                <th>Unit</th>
+                                                <th>Qrt</th>
+                                                <th class="sn"></th>
                                             </tr>
+                                            </thead>
+                                            <tbody id="tbl_posts_body">
+                                            <tr id="rec-1">
+                                                <td class="sn">1.</td>
+                                                <td>Sanitary Inspector</td>
+                                                <td>02</td>
+                                                <td>21 to 42 years</td>
+                                                <td>5200-20200/-</td>
+                                                <td class="sn"><a class="btn btn-xs delete-record" data-id="1"><i
+                                                        class="glyphicon glyphicon-trash"></i></a></td>
+                                            </tr>
+                                            </tbody>
                                         </table>
+                                        <a class="btn btn-sm pull-left add-record" data-added="0"><i
+                                                class="glyphicon glyphicon-plus"></i></a>
                                     </td>
                                 </tr>
                             </table>
@@ -90,6 +117,21 @@
             });
             $("#requiredDate").datepicker({
                 dateFormat: "yy-mm-dd",
+            });
+        });
+        $(document).ready(function () {
+
+            $(".add-record").click(function () {
+                var size = $('#tbl_posts >tbody >tr').length + 1;
+                var txt = '<tr id="rec-1">' +
+                        '<td class="sn">'+size+'.</td>' +
+                        '<td>Sanitary Inspector</td>' +
+                        '<td>02</td>' +
+                        '<td>21 to 42 years</td>' +
+                        '<td>5200-20200/-</td>' +
+                        '<td class="sn"><a class="btn btn-xs delete-record" data-id="1"><i class="glyphicon glyphicon-trash"></i></a></td>' +
+                        '</tr>';
+                $("#tbl_posts_body").append(txt);
             });
         });
     </script>

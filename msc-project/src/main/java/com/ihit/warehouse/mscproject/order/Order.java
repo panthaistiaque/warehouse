@@ -20,9 +20,11 @@ public class Order {
     private Integer id;
     @ManyToOne
     private Suppliers suppliers;
-    private String remarks;
+    private String note;
     @Column(columnDefinition = "DATETIME")
-    private Date orderDate;
+    private Date requestDate;
+    @Column(columnDefinition = "DATETIME")
+    private Date requiredDate;
 
     @Column(name = "Status", columnDefinition = "enum('Initiated','Froward','Send','Approved')")
     private String Status;
