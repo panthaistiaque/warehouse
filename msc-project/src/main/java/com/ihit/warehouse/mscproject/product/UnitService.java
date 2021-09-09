@@ -17,6 +17,9 @@ public class UnitService {
     public List getAll() {
         return unitRepo.findAll();
     }
+    public List getAllActiveUnit(boolean isActive) {
+        return unitRepo.findByIsActive(isActive);
+    }
 
     public void deactive(Integer id) {
         UnitModel model =  unitRepo.getOne(id);

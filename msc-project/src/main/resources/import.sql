@@ -16,12 +16,29 @@ INSERT INTO brand(id, NAME,created_on , is_active) VALUES (3, 'AKIJE',NOW(), TRU
 INSERT INTO brand(id, NAME,created_on , is_active) VALUES (4, 'MEGHNA',NOW(), TRUE);
 INSERT INTO brand(id, NAME,created_on , is_active) VALUES (5, 'ACI',NOW(), TRUE);
 INSERT INTO brand(id, NAME,created_on , is_active) VALUES (6, 'OLYMPAC',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (7, 'Dove Unilever',NOW(), TRUE);
 
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (1, 'Computer',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (2, 'Oil',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (3, 'Toiletries',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (4, 'Lathers',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (5, 'Dry Food',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (6, 'Soap',NOW(), TRUE);
+
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (1,'Dove Beauty Bar White 135g',7,6,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (2,'Dove Beauty Bar Pink 100g',7,6,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (3,'Dove Beauty Bar Pink 135g ',7,6,true, now());
+
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (1,'Box', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (2,'Packet', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (3,'Pcs', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (4,'Dozon', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (5,'Crate', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (6,'Crate', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (7,'Case', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (8,'Barrel', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (9,'Cylinder', Now(), true);
+INSERT INTO unit(id, NAME,created_on , is_active) VALUES (10,'Tube', Now(), true);
 
 
 insert into shelf(id, name, slot_number) values (1, 'AA', 6);

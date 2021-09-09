@@ -2,6 +2,7 @@ package com.ihit.warehouse.mscproject.order;
 
 import com.ihit.warehouse.mscproject.suppliers.model.Suppliers;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,8 +22,10 @@ public class Order {
     @ManyToOne
     private Suppliers suppliers;
     private String note;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(columnDefinition = "DATETIME")
     private Date requestDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(columnDefinition = "DATETIME")
     private Date requiredDate;
 

@@ -23,17 +23,17 @@
                 <div class="col-md-12 center">
                     <br>
                     <div id="home">
-                        <form th:action="@{/saveBrand}" th:method="POST">
-                            <input name="id" type="hidden" class="form-control">
+                        <form th:action="@{/saveOrder}" th:method="POST" th:object="${saveOrder}">
+                            <input th:name="id" type="hidden" class="form-control">
                             <table class="table ">
                                 <tr>
                                     <td>Request Date</td>
-                                    <td><input id="requestDate" name="requestDate" class="form-control" type="text"/>
+                                    <td><input id="requestDate" th:name="requestDate" class="form-control" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Required Date</td>
-                                    <td><input id="requiredDate" name="requiredDate" class="form-control" type="text"/>
+                                    <td><input id="requiredDate" th:name="requiredDate" class="form-control" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -41,7 +41,7 @@
                                     <td>
                                         <div th:if="${suppliersList != null && !#lists.isEmpty(suppliersList)}"
                                              th:remove="tag">
-                                            <select class="form-control" name="suppliers" id="suppliers">
+                                            <select class="form-control" th:name="suppliers" id="suppliers">
                                                 <option style="display: none" value="">Select one supplier</option>
                                                 <option th:each="supplier : ${suppliersList}"
                                                         th:value="${supplier.id}"
@@ -59,7 +59,7 @@
                                 <tr>
                                     <td>Note</td>
                                     <td>
-                                        <textarea name="note" class="form-control"></textarea>
+                                        <textarea th:name="note" class="form-control"></textarea>
                                     </td>
                                 </tr>
 
@@ -77,19 +77,36 @@
                                             </tr>
                                             </thead>
                                             <tbody id="tbl_posts_body">
-                                            <tr id="rec-1">
-                                                <td class="sn">1.</td>
-                                                <td>Sanitary Inspector</td>
-                                                <td>02</td>
-                                                <td>21 to 42 years</td>
-                                                <td>5200-20200/-</td>
-                                                <td class="sn"><a class="btn btn-xs delete-record" data-id="1"><i
-                                                        class="glyphicon glyphicon-trash"></i></a></td>
-                                            </tr>
+                                                <tr id="rec-1">
+                                                    <td class="sn">1.</td>
+                                                    <td >
+                                                        <input class="form-control" th:name="dtl[0].category" value="2"/>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" th:name="dtl[0].product" >
+                                                            <option style="display: none" value="">Select one</option>
+                                                            <option th:each="product : ${productList}"
+                                                                    th:value="${product.id}"
+                                                                    th:text="${product.category.name} +' - '+${product.name}">
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td ><input class="form-control" th:name="dtl[0].orderQty" value="2"/></td>
+                                                    <td>
+                                                        <select class="form-control" th:name="dtl[0].unit" >
+                                                            <option style="display: none" value="">Select one</option>
+                                                            <option th:each="unit : ${unitList}"
+                                                                    th:value="${unit.id}"
+                                                                    th:text="${unit.name}">
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="sn"><a class="btn btn-sm pull-left add-record" data-added="0"><i
+                                                            class="glyphicon glyphicon-plus"></i></a></td>
+                                                </tr>
                                             </tbody>
                                         </table>
-                                        <a class="btn btn-sm pull-left add-record" data-added="0"><i
-                                                class="glyphicon glyphicon-plus"></i></a>
+
                                     </td>
                                 </tr>
                             </table>
@@ -109,7 +126,7 @@
 
         </div>
     </div>
-    <script>
+    <script type="text/javascript" th:inline="javascript">
         $(function () {
             $("#requestDate").datepicker({
                 dateFormat: "yy-mm-dd",
@@ -121,17 +138,46 @@
         });
         $(document).ready(function () {
 
+            var unitList = /*[[${unitList}]]*/;
+            var unitOption = '';
+            for(i=0;i<unitList.length; i++){
+                unitOption += '<option  th:value="'+unitList[i].id+'" th:text="'+unitList[i].name+'"> '+unitList[i].name+'</option>';
+            };
+            var productList = /*[[${productList}]]*/;
+            console.log(productList);
+            var productOption = '';
+            for(i=0;i<productList.length; i++){
+                productOption += '<option  th:value="'+productList[i].id+'" th:text="'+productList[i].name+'"> '+productList[i].category.name+' - '+productList[i].name+'</option>';
+            }
             $(".add-record").click(function () {
                 var size = $('#tbl_posts >tbody >tr').length + 1;
-                var txt = '<tr id="rec-1">' +
-                        '<td class="sn">'+size+'.</td>' +
-                        '<td>Sanitary Inspector</td>' +
-                        '<td>02</td>' +
-                        '<td>21 to 42 years</td>' +
-                        '<td>5200-20200/-</td>' +
-                        '<td class="sn"><a class="btn btn-xs delete-record" data-id="1"><i class="glyphicon glyphicon-trash"></i></a></td>' +
+                var txt = '<tr id="rec-'+size+'">'+
+                        '<td class="sn">'+size+'.</td>'+
+                        '<td >'+
+                        '<input class="form-control"  value="7"/>'+
+                        '</td>'+
+                        '<td>'+
+                        '<select class="form-control" th:name="dtl['+(size-1)+'].product" >'+
+                        '<option style="display: none" value="">Select one</option>'+
+                        productOption+
+                        '</select>'+
+                        '</td>'+
+                        '<td ><input class="form-control" th:name="dtl['+(size-1)+'].orderQty" value="2"/></td>'+
+                        '<td>'+
+                        '<select class="form-control" th:name="dtl['+(size-1)+'].unit" >'+
+                        '<option style="display: none" value="">Select one</option>'+
+                        //'<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text="${unit.name}"> </option>'+
+                        unitOption+
+                        '</select>'+
+                        '</td>'+
+                        '<td class="sn"><a class="btn btn-xs delete-record" data-id="'+size+'"><i class="glyphicon glyphicon-trash"></i></a></td>'+
                         '</tr>';
                 $("#tbl_posts_body").append(txt);
+            });
+
+
+            $("#tbl_posts").on('click','.delete-record',function(){
+                $(this).parent().parent().remove();
             });
         });
     </script>

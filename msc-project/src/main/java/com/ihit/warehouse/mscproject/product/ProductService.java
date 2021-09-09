@@ -34,4 +34,8 @@ public class ProductService {
         productModel.setCreatedOn(new Date());
         return productRepo.save(productModel);
     }
+
+    public List getAllActiveProduct(boolean isActive) {
+        return productRepo.findByIsActive(isActive);
+    }
 }
