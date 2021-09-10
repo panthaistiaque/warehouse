@@ -38,8 +38,8 @@
                             <td th:text="${listObj.note}"></td>
                             <td>
                                 <div th:switch="${listObj.status}" th:remove="tag">
-                                    <span th:case="Initiated"><span class="label label-success">Initiated</span></span>
-                                    <span th:case="Froward"></span>
+                                    <span th:case="Initiated"><span class="label label-default">Initiated</span></span>
+                                    <span th:case="Froward"><span class="label label-success">Froward</span></span>
                                 </div>
 
                             </td>
@@ -72,7 +72,7 @@
                     <h4 class="modal-title" id="Order_Details_id">Order Details ()</h4>
                 </div>
                 <div class="modal-body">
-                   <table class="table">
+                   <table class="table table-borderless">
                        <tr>
                            <td>Suppliers Name :</td>
                            <td><input class="form-control" readonly id="order_Details_suppliers"/></td>
@@ -91,7 +91,15 @@
                        </tr>
                        <tr>
                            <td colspan="2">
-                               <table class="table">
+                               <table class="table table-bordered">
+                                   <thead>
+                                   <tr>
+                                       <th>Category</th>
+                                       <th>Product Name</th>
+                                       <th>Brand</th>
+                                       <th>Qrt</th>
+                                   </tr>
+                                   </thead>
                                    <tbody id="order_details_table"></tbody>
                                </table>
                            </td>
@@ -126,15 +134,15 @@
                     type: "POST",
                     success: function (response, status) {
                         console.log(response);
-                        console.log(status);
+                        console.log($.datepicker.formatDate('yymmdd', new Date(response.requiredDate)));
                         $("#Order_Details_id").html("Order Details (#"+response.id+")");
                         $("#order_Details_suppliers").val(response.suppliers.name);
-                        $("#order_details_requestDate").val(response.requestDate);
-                        $("#order_Details_requiredDate").val(response.requiredDate);
+                        $("#order_details_requestDate").val(response.requestDate.split('T')[0]);
+                        $("#order_Details_requiredDate").val(response.requiredDate.split('T')[0]);
                         $("#order_Details_note").val(response.note);
                         var tex = "";
                         for(i=0;i<response.dtl.length; i++){
-                            tex +="<tr><td>"+response.dtl[i].product.category.name+"</td><td>"+response.dtl[i].product.name+"</td><td>"+response.dtl[i].orderQty+"</td><td>"+response.dtl[i].unit.name+"</td></tr>"
+                            tex +="<tr><td>"+response.dtl[i].product.category.name+"</td><td>"+response.dtl[i].product.name+"</td><td>"+response.dtl[i].product.brand.name+"</td><td>"+response.dtl[i].orderQty+" "+response.dtl[i].unit.name+"</td></tr>"
                         }
                         $("#order_details_table").html(tex);
 
