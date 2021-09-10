@@ -1,0 +1,147 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+
+            <h1 class="page-title">Category List</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Product</a></li>
+                <li><a>Category</a></li>
+                <li class="active">Category List</li>
+            </ul>
+
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">SL</th>
+                            <th class="col-md-3">suppliers Name</th>
+                            <th class="col-md-1">Request Date</th>
+                            <th class="col-md-1">Required Date</th>
+                            <th class="col-md-3">Note</th>
+                            <th class="col-md-1">Status</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="listObj:${list}">
+                            <td th:text="${listObj.id}"></td>
+                            <td th:text="${listObj.suppliers.name }"></td>
+                            <td th:text="${#dates.format(listObj.requestDate, 'dd MMM yyyy')}"></td>
+                            <td th:text="${#dates.format(listObj.requiredDate, 'dd MMM yyyy')}"></td>
+                            <td th:text="${listObj.note}"></td>
+                            <td>
+                                <div th:switch="${listObj.status}" th:remove="tag">
+                                    <span th:case="Initiated"><span class="label label-success">Initiated</span></span>
+                                    <span th:case="Froward"></span>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default order-details"
+                                       title="Details"><span class="glyphicon glyphicon-new-window"></span></a>
+                                    <a th:href="@{'/get-unit/'+${listObj.id}}" class="btn btn-sm btn-default"
+                                       title="Edit"><span class="fa fa-pencil"></span></a>
+                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"
+                                       title="Froward"><span class="fa fa-paper-plane"></span></a>
+                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"><span
+                                            class="glyphicon glyphicon-trash"></span></a>
+
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="order-details-form" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="Order_Details_id">Order Details ()</h4>
+                </div>
+                <div class="modal-body">
+                   <table class="table">
+                       <tr>
+                           <td>Suppliers Name :</td>
+                           <td><input class="form-control" readonly id="order_Details_suppliers"/></td>
+                       </tr>
+                       <tr>
+                           <td>Request Date :</td>
+                           <td><input class="form-control" readonly id="order_details_requestDate"/></td>
+                       </tr>
+                       <tr>
+                           <td>Required Date :</td>
+                           <td><input class="form-control" readonly id="order_Details_requiredDate"/></td>
+                       </tr>
+                       <tr>
+                           <td>Note :</td>
+                           <td><textarea class="form-control" readonly id="order_Details_note"></textarea></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">
+                               <table class="table">
+                                   <tbody id="order_details_table"></tbody>
+                               </table>
+                           </td>
+                       </tr>
+                   </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".brand-deactivate").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/unit_deactive/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+            //----------------------------------------------------------------------
+            $(".order-details").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/order-details/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        console.log(response);
+                        console.log(status);
+                        $("#Order_Details_id").html("Order Details (#"+response.id+")");
+                        $("#order_Details_suppliers").val(response.suppliers.name);
+                        $("#order_details_requestDate").val(response.requestDate);
+                        $("#order_Details_requiredDate").val(response.requiredDate);
+                        $("#order_Details_note").val(response.note);
+                        var tex = "";
+                        for(i=0;i<response.dtl.length; i++){
+                            tex +="<tr><td>"+response.dtl[i].product.category.name+"</td><td>"+response.dtl[i].product.name+"</td><td>"+response.dtl[i].orderQty+"</td><td>"+response.dtl[i].unit.name+"</td></tr>"
+                        }
+                        $("#order_details_table").html(tex);
+
+                        $("#order-details-form").modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+</div>

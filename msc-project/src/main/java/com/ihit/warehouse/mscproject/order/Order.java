@@ -23,10 +23,10 @@ public class Order {
     private Suppliers suppliers;
     private String note;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(columnDefinition = "DATETIME")
+    @Column(columnDefinition = "DATE")
     private Date requestDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(columnDefinition = "DATETIME")
+    @Column(columnDefinition = "DATE")
     private Date requiredDate;
 
     @Column(name = "Status", columnDefinition = "enum('Initiated','Froward','Send','Approved')")
@@ -34,7 +34,7 @@ public class Order {
 
     private boolean active;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
     private List<OrderDtl> dtl = new ArrayList<>();
 
 }

@@ -8,7 +8,9 @@ import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ import java.util.List;
 @Controller
 public class OrderCtrl extends AppProperty {
     @Autowired
+    OrderService orderService;
+    @Autowired
     SuppliersService suppliersService;
     @Autowired
     ProductService productService;
@@ -27,27 +31,34 @@ public class OrderCtrl extends AppProperty {
     UnitService unitService;
 
     @GetMapping(value = "/order_form")
-    private ModelAndView getBrand(ModelAndView modelAndView){
-        OrderDtl order =new OrderDtl();
-        order.setOrderQty(2);
-        OrderDtl order2 =new OrderDtl();
-        order2.setOrderQty(4);
-        List<OrderDtl> dtls = new ArrayList<>();
-        dtls.add(order);
-        dtls.add(order2);
-        Order order1 = new Order();
-        order1.setDtl(dtls);
-        modelAndView.addObject("order",order1);
-        modelAndView.addObject("suppliersList",suppliersService.findAll());
-        modelAndView.addObject("productList",productService.getAllActiveProduct(true));
-        modelAndView.addObject("unitList",unitService.getAllActiveUnit(true));
+    private ModelAndView getBrand(ModelAndView modelAndView) {
+        modelAndView.addObject("order", new Order());
+        modelAndView.addObject("suppliersList", suppliersService.findAll());
+        modelAndView.addObject("productList", productService.getAllActiveProduct(true));
+        modelAndView.addObject("unitList", unitService.getAllActiveUnit(true));
         modelAndView.setViewName("order/order_entry_form");
         return modelAndView;
     }
 
-    @PostMapping(value = "/saveOrder")
-    private ModelAndView saveOrder(ModelAndView modelAndView, Order order){
-        modelAndView.setViewName("redirect:/unit_list");
+    @GetMapping(value = "/order_list")
+    private ModelAndView getOrderList(ModelAndView modelAndView) {
+        modelAndView.addObject("list", orderService.getAll());
+        modelAndView.setViewName("order/order_list");
         return modelAndView;
     }
+
+    @PostMapping(value = "/saveOrder")
+    private ModelAndView saveOrder(ModelAndView modelAndView, Order order) {
+        orderService.save(order);
+        modelAndView.setViewName("redirect:/order_list");
+        return modelAndView;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/order-details/{id}")
+    private Order orderDetails(@PathVariable("id") Integer id) {
+        return orderService.getOne(id);
+    }
+
+
 }
