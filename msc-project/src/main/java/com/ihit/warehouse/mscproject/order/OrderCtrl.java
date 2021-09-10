@@ -60,5 +60,21 @@ public class OrderCtrl extends AppProperty {
         return orderService.getOne(id);
     }
 
+    @GetMapping(value = "/order_edit/{id}")
+    private ModelAndView editOrder(ModelAndView modelAndView,@PathVariable("id") Integer id) {
+        modelAndView.addObject("order", orderService.getOne(id));
+        modelAndView.addObject("suppliersList", suppliersService.findAll());
+        modelAndView.addObject("productList", productService.getAllActiveProduct(true));
+        modelAndView.addObject("unitList", unitService.getAllActiveUnit(true));
+        modelAndView.setViewName("order/order_entry_form");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/order-froward/{id}")
+    private ModelAndView orderFroward(ModelAndView modelAndView,@PathVariable("id") Integer id) {
+        orderService.orderFroward(id);
+        modelAndView.setViewName("redirect:/order_list");
+        return modelAndView;
+    }
 
 }

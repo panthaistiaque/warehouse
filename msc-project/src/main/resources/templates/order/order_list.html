@@ -47,11 +47,10 @@
                                 <div class="btn-group">
                                     <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default order-details"
                                        title="Details"><span class="glyphicon glyphicon-new-window"></span></a>
-                                    <a th:href="@{'/get-unit/'+${listObj.id}}" class="btn btn-sm btn-default"
-                                       title="Edit"><span class="fa fa-pencil"></span></a>
-                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"
+                                    <a th:if="${listObj.status=='Initiated'}" class="btn btn-sm btn-default" title="Edit" ><span class="fa fa-pencil"></span></a>
+                                    <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}" class="btn btn-sm btn-default order-froward"
                                        title="Froward"><span class="fa fa-paper-plane"></span></a>
-                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"><span
+                                    <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"><span
                                             class="glyphicon glyphicon-trash"></span></a>
 
                                 </div>
@@ -87,7 +86,7 @@
                        </tr>
                        <tr>
                            <td>Note :</td>
-                           <td><textarea class="form-control" readonly id="order_Details_note"></textarea></td>
+                           <td><textarea class="form-control" readonly id="order_Details_note" style="resize:none"></textarea></td>
                        </tr>
                        <tr>
                            <td colspan="2">
@@ -118,6 +117,18 @@
                 var id = $(this).attr('data');
                 $.ajax({
                     url: "/unit_deactive/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+            $(".order-froward").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/order-froward/" + id,
                     type: "POST",
                     success: function (response, status) {
                         if (status == 'success') {

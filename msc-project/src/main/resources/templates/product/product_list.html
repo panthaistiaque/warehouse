@@ -60,6 +60,7 @@
     </div>
     <script>
         $(document).ready(function(){
+            toastr.info('Page Loaded!');
             $(".brand-deactivate").click(function(){
 //                alert($(this).attr('data'));
                 var id = $(this).attr('data');
@@ -68,7 +69,6 @@
                     type: "POST",
                     success: function (response, status) {
                         if (status == 'success') {
-                            toastr.options.positionClass = 'toast-top-center';
                             toastr.success('Update complete');
                             location.reload();
                         }

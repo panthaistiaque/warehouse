@@ -29,4 +29,10 @@ public class OrderService {
     public Order getOne(Integer id) {
         return orderRepo.findById(id).get();
     }
+
+    public Order orderFroward(Integer id) {
+        Order order = getOne(id);
+        order.setStatus(Status.FROWARD);
+        return orderRepo.save(order);
+    }
 }

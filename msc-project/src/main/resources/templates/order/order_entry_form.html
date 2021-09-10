@@ -23,17 +23,17 @@
                 <div class="col-md-12 center">
                     <br>
                     <div id="home">
-                        <form th:action="@{/saveOrder}" th:method="POST" th:object="${saveOrder}">
-                            <input th:name="id" type="hidden" class="form-control">
+                        <form th:action="@{/saveOrder}" th:method="POST" th:object="${order}">
+                            <input th:name="id" th:value="*{id}" type="hidden" class="form-control">
                             <table class="table table-borderless">
                                 <tr>
                                     <td>Request Date</td>
-                                    <td><input id="requestDate" th:name="requestDate" class="form-control" type="text"/>
+                                    <td><input id="requestDate" th:name="requestDate" th:value="*{requestDate}" class="form-control" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Required Date</td>
-                                    <td><input id="requiredDate" th:name="requiredDate" class="form-control" type="text"/>
+                                    <td><input id="requiredDate" th:name="requiredDate" th:value="*{requiredDate}" class="form-control" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -41,7 +41,7 @@
                                     <td>
                                         <div th:if="${suppliersList != null && !#lists.isEmpty(suppliersList)}"
                                              th:remove="tag">
-                                            <select class="form-control" th:name="suppliers" id="suppliers">
+                                            <select class="form-control" th:name="suppliers" th:field="*{suppliers}" id="suppliers">
                                                 <option style="display: none" value="">Select one supplier</option>
                                                 <option th:each="supplier : ${suppliersList}"
                                                         th:value="${supplier.id}"
@@ -59,13 +59,13 @@
                                 <tr>
                                     <td>Note</td>
                                     <td>
-                                        <textarea th:name="note" class="form-control"></textarea>
+                                        <textarea th:name="note" th:value="*{note}"  class="form-control"></textarea>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td colspan="2">
-                                        <table id="tbl_posts" class="table table-bordered">
+                                        <table id="tbl_posts" class="table table-bordered table-condensed">
                                             <thead>
                                             <tr>
                                                 <th class="sn">SL</th>
@@ -80,7 +80,7 @@
                                                 <tr id="rec-1">
                                                     <td class="sn">1.</td>
                                                     <td >
-                                                        <input class="form-control" th:name="dtl[0].category" value="2"/>
+                                                        <input class="form-control" th:name="dtl[0].category"  value="2"/>
                                                     </td>
                                                     <td>
                                                         <select class="form-control" th:name="dtl[0].product" >
