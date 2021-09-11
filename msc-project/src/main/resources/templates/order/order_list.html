@@ -111,8 +111,12 @@
             </div>
         </div>
     </div>
-    <script>
+    <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
+            var message = /*[[${message}]]*/;
+            if (message != null && message.length > 5) {
+                toastr.success(message);
+            }
             $(".brand-deactivate").click(function () {
                 var id = $(this).attr('data');
                 $.ajax({
@@ -122,6 +126,9 @@
                         if (status == 'success') {
                             location.reload();
                         }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
                     }
                 });
             });
@@ -134,6 +141,9 @@
                         if (status == 'success') {
                             location.reload();
                         }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
                     }
                 });
             });
@@ -144,20 +154,27 @@
                     url: "/order-details/" + id,
                     type: "POST",
                     success: function (response, status) {
-                        console.log(response);
-                        console.log($.datepicker.formatDate('yymmdd', new Date(response.requiredDate)));
-                        $("#Order_Details_id").html("Order Details (#"+response.id+")");
-                        $("#order_Details_suppliers").val(response.suppliers.name);
-                        $("#order_details_requestDate").val(response.requestDate.split('T')[0]);
-                        $("#order_Details_requiredDate").val(response.requiredDate.split('T')[0]);
-                        $("#order_Details_note").val(response.note);
-                        var tex = "";
-                        for(i=0;i<response.dtl.length; i++){
-                            tex +="<tr><td>"+response.dtl[i].product.category.name+"</td><td>"+response.dtl[i].product.name+"</td><td>"+response.dtl[i].product.brand.name+"</td><td>"+response.dtl[i].orderQty+" "+response.dtl[i].unit.name+"</td></tr>"
-                        }
-                        $("#order_details_table").html(tex);
+                        if (status == 'success') {
+                            console.log(response);
+                            console.log($.datepicker.formatDate('yymmdd', new Date(response.requiredDate)));
+                            $("#Order_Details_id").html("Order Details (#" + response.id + ")");
+                            $("#order_Details_suppliers").val(response.suppliers.name);
+                            $("#order_details_requestDate").val(response.requestDate.split('T')[0]);
+                            $("#order_Details_requiredDate").val(response.requiredDate.split('T')[0]);
+                            $("#order_Details_note").val(response.note);
+                            var tex = "";
+                            for (i = 0; i < response.dtl.length; i++) {
+                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td></tr>"
+                            }
+                            $("#order_details_table").html(tex);
 
-                        $("#order-details-form").modal('show');
+                            $("#order-details-form").modal('show');
+                        }else {
+                            toastr.error(status);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
                     }
                 });
             });

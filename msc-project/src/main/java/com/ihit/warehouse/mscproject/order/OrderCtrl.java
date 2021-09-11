@@ -5,13 +5,12 @@ import com.ihit.warehouse.mscproject.product.BrandModel;
 import com.ihit.warehouse.mscproject.product.ProductService;
 import com.ihit.warehouse.mscproject.product.UnitService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
+import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +40,21 @@ public class OrderCtrl extends AppProperty {
     }
 
     @GetMapping(value = "/order_list")
-    private ModelAndView getOrderList(ModelAndView modelAndView) {
+    private ModelAndView getOrderList(ModelAndView modelAndView, @ModelAttribute("mess") String s) {
         modelAndView.addObject("list", orderService.getAll());
+        if (s != null) {
+            modelAndView.addObject("message", s);
+        }
         modelAndView.setViewName("order/order_list");
         return modelAndView;
     }
 
     @PostMapping(value = "/saveOrder")
-    private ModelAndView saveOrder(ModelAndView modelAndView, Order order) {
-        orderService.save(order);
+    private ModelAndView saveOrder(ModelAndView modelAndView, Order order, RedirectAttributes redirect) {
+        order = orderService.save(order);
+        if(order.getId()>0){
+            redirect.addFlashAttribute("mess", "Order created successfully");
+        }
         modelAndView.setViewName("redirect:/order_list");
         return modelAndView;
     }
@@ -71,8 +76,11 @@ public class OrderCtrl extends AppProperty {
     }
 
     @PostMapping(value = "/order-froward/{id}")
-    private ModelAndView orderFroward(ModelAndView modelAndView,@PathVariable("id") Integer id) {
-        orderService.orderFroward(id);
+    private ModelAndView orderFroward(ModelAndView modelAndView,@PathVariable("id") Integer id,RedirectAttributes redirect) {
+        Order order = orderService.orderFroward(id);
+        if(order.getStatus().equalsIgnoreCase(Status.FROWARD)){
+            redirect.addFlashAttribute("mess", "This order forwarded successfully");
+        }
         modelAndView.setViewName("redirect:/order_list");
         return modelAndView;
     }
