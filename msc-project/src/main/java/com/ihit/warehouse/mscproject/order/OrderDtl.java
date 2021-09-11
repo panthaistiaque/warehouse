@@ -4,10 +4,11 @@ import com.ihit.warehouse.mscproject.product.ProductModel;
 import com.ihit.warehouse.mscproject.product.UnitModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 
 /**
- * Created by user on 9/7/2021.
+ * Created by user on 9/10/2021.
  */
 @Data
 @Embeddable

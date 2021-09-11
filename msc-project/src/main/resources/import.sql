@@ -9,25 +9,42 @@ insert into user_role(id, role_id) values (1,1);
 
 insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('16 Akmol khan road, Mitford', 'Panta', '01685331016', 'panthaistiaque@gmail.com', 'IH Traders', null, 'VENDOR','a8fddcfb-a923-4de2-9319-b61662275ef1');
 insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('39 New market, Dhaka', 'Istiaque', '01721672283', 'mdistiaque56@yahoo.com', 'Thai Brothers and Co.', null, 'VENDOR','1035af17-5651-4d4d-86ad-4bfe4f640646');
+insert into suppliers(name, address, email, remarks, contact_person_name, contact_person_phone,  type, token) values ('Shalgaria Warehouse', 'Square Road, Salgaria, Pabna','panthaistiaque@gmail.com', null, 'Pantha','01911109375', 'OWN','4035af17-5651-4d4d-86ad-4bfe4f640646');
+insert into suppliers(name, address, email, remarks, contact_person_name, contact_person_phone,  type, token) values ('Rupshi Warehouse', 'Rupshi,Narayangonj, Dhaka','panthaistiaque@gmail.com', null, 'Pantha','01911109375', 'OWN','5035af17-5651-4d4d-86ad-4bfe4f640646');
+insert into suppliers(name, address, email, remarks, contact_person_name, contact_person_phone,  type, token) values ('Main Warehouse', 'Rupayan Centre, 72 Mohakhali C/A, Dhaka','panthaistiaque@gmail.com', null, 'Pantha','01911109375', 'OWN','6035af17-5651-4d4d-86ad-4bfe4f640646');
 
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (1, 'Unilever',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (2, 'PRAN-RFL',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (3, 'AKIJE',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (4, 'MEGHNA',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (5, 'ACI',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (6, 'OLYMPAC',NOW(), TRUE);
-INSERT INTO brand(id, NAME,created_on , is_active) VALUES (7, 'Dove Unilever',NOW(), TRUE);
 
-INSERT INTO category(id, NAME,created_on , is_active) VALUES (1, 'Computer',NOW(), TRUE);
-INSERT INTO category(id, NAME,created_on , is_active) VALUES (2, 'Oil',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (1,'Jui - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (2,'Meril Protective - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (3,'Meril Baby - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (4,'Meril Milk Soap Bar - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (5,'Revive - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (6,'Chaka - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (7,'Chamak - Square Toiletries Ltd.',NOW(), TRUE);
+INSERT INTO brand(id, NAME,created_on , is_active) VALUES (8,'Senora - Square Toiletries Ltd.',NOW(), TRUE);
+
+
+
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (1, 'Oil (Edible)',NOW(), TRUE);
+INSERT INTO category(id, NAME,created_on , is_active) VALUES (2, 'Oil (Beauty)',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (3, 'Toiletries',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (4, 'Lathers',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (5, 'Dry Food',NOW(), TRUE);
 INSERT INTO category(id, NAME,created_on , is_active) VALUES (6, 'Soap',NOW(), TRUE);
 
-insert into product (id,name,brand_id,category_id,is_active,created_on) values (1,'Dove Beauty Bar White 135g',7,6,true, now());
-insert into product (id,name,brand_id,category_id,is_active,created_on) values (2,'Dove Beauty Bar Pink 100g',7,6,true, now());
-insert into product (id,name,brand_id,category_id,is_active,created_on) values (3,'Dove Beauty Bar Pink 135g ',7,6,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (1,'Meril Petroleum Jelly 15ml',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (2,'Meril Petroleum Jelly 50ml',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (3,'Meril Petroleum Jelly 100ml',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (4,'Meril Lipgel 10gm',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (5,'Meril Olive Oil Tin Jar 150ml',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (6,'Meril Olive Oil Tin Jar 350ml',2,3,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (7,'Jui Coconut Oil Plastic 100ml',1,2,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (8,'Jui Coconut Oil Plastic 200ml ',1,2,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (9,'Jui Coconut Oil Plastic 350ml',1,2,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (10,'Jui Coconut Oil Can 200ml',1,2,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (11,'Jui Coconut Oil Can 350ml ',1,2,true, now());
+insert into product (id,name,brand_id,category_id,is_active,created_on) values (12,'Jui Coconut Oil Can 450ml',1,2,true, now());
+
 
 INSERT INTO unit(id, NAME,created_on , is_active) VALUES (1,'Box', Now(), true);
 INSERT INTO unit(id, NAME,created_on , is_active) VALUES (2,'Packet', Now(), true);

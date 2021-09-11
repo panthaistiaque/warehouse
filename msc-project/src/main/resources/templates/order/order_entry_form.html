@@ -83,7 +83,7 @@
                                                         <input class="form-control" th:name="dtl[0].category"  value="2"/>
                                                     </td>
                                                     <td>
-                                                        <select class="form-control" th:name="dtl[0].product" >
+                                                        <select class="form-control select2-dropdown" th:name="dtl[0].product" >
                                                             <option style="display: none" value="">Select one</option>
                                                             <option th:each="product : ${productList}"
                                                                     th:value="${product.id}"
@@ -93,7 +93,7 @@
                                                     </td>
                                                     <td ><input class="form-control" th:name="dtl[0].orderQty" value="2"/></td>
                                                     <td>
-                                                        <select class="form-control" th:name="dtl[0].unit" >
+                                                        <select class="form-control select2-dropdown" th:name="dtl[0].unit" >
                                                             <option style="display: none" value="">Select one</option>
                                                             <option th:each="unit : ${unitList}"
                                                                     th:value="${unit.id}"
@@ -157,14 +157,14 @@
                         '<input class="form-control"  value="7"/>'+
                         '</td>'+
                         '<td>'+
-                        '<select class="form-control" name="dtl['+(size-1)+'].product" >'+
+                        '<select class="form-control select2-dropdown" name="dtl['+(size-1)+'].product" >'+
                         '<option style="display: none" value="">Select one</option>'+
                         productOption+
                         '</select>'+
                         '</td>'+
                         '<td ><input class="form-control" name="dtl['+(size-1)+'].orderQty" value="2"/></td>'+
                         '<td>'+
-                        '<select class="form-control" name="dtl['+(size-1)+'].unit" >'+
+                        '<select class="form-control select2-dropdown" name="dtl['+(size-1)+'].unit" >'+
                         '<option style="display: none" value="">Select one</option>'+
                         //'<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text="${unit.name}"> </option>'+
                         unitOption+
@@ -179,6 +179,8 @@
             $("#tbl_posts").on('click','.delete-record',function(){
                 $(this).parent().parent().remove();
             });
+
+            $('.select2-dropdown').select2();
         });
     </script>
 </div>
