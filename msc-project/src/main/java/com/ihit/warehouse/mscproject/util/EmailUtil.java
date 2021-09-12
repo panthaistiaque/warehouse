@@ -25,8 +25,7 @@ public class EmailUtil {
     public void manageMail(String type, String toAddress, String s,String d ) {
         switch (type) {
             case "NewOrdersList":
-                System.out.println(s);
-                sendEmail(d , "Request Accepted", toAddress);
+                sendEmail(d , "Product Requisition", toAddress);
         }
     }
     private void sendEmail(String mailBody, String subject, String toAddress) {
