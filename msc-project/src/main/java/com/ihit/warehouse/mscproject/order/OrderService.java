@@ -1,6 +1,8 @@
 package com.ihit.warehouse.mscproject.order;
 
+import com.ihit.warehouse.mscproject.util.DateUtil;
 import com.ihit.warehouse.mscproject.util.EmailUtil;
+import com.ihit.warehouse.mscproject.util.Encryption;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,10 @@ public class OrderService {
 
     String mail_body = "<font size=\"2\" face=\"Arial,Helvetica,Tahoma\"> \n" +
             " Dear Sir,<br><br> \n" +
-            " <p>A product order has been sent to you from the Automatic Warehouse Management System. This order has been created in Automatic System on  REQUSTED_DATE and you are requested to complete it by REQUERD_DATE. The full details of the order sent to you are given below. \n" +
+            " <p>A product order has been sent to you from the Automatic Warehouse Management System. This order has been created in Automatic System on  <b>REQUSTED_DATE</b> and you are requested to complete it by <b>REQUERD_DATE</b>. The full details of the order sent to you are given below. \n" +
             " And by clicking on the link sent with this email, the app will be able to view the details of this order and provide some data entry to complete<br><br></p> \n" +
             " <br><p></p> \n" +
-            " <table style='width='100%'; border: 1px solid black;'> \n" +
+            " <table width='100%'> \n" +
             " <tbody> \n" +
             " <tr>\n" +
             "                                       <th style='width='100%'; border: 1px solid black;'>Category</th>\n" +
@@ -66,7 +68,11 @@ public class OrderService {
                     "<td style='width='100%'; border: 1px solid black;'>"+dtl.getOrderQty()+" "+dtl.getUnit().getName()+"</td>"+
                     "</tr>";
         }
+        String link = "http://localhost:8080/vendor-singup?tk=" + Encryption.getMd5(String.valueOf(order.getSuppliers().getId())) + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ Encryption.getMd5(String.valueOf(id));
         mail_body = mail_body.replace("ORDER_LIST",s);
+        mail_body = mail_body.replace("REQUSTED_DATE", DateUtil.dateFormater(order.getRequestDate(),"dd MMMM yyyy"));
+        mail_body = mail_body.replace("REQUERD_DATE", DateUtil.dateFormater(order.getRequiredDate(),"dd MMMM yyyy"));
+        mail_body = mail_body.replace("LOGIN_LINK", link);
         emailUtil.manageMail("NewOrdersList",order.getSuppliers().getEmail(),null,mail_body);
         return orderRepo.save(order);
     }

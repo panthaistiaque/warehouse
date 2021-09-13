@@ -14,4 +14,16 @@ public class DateUtil {
         return currentDate;
     }
 
+    public static String dateFormater(Date date, String format){
+        switch (format){
+            case "dd MMMM yyyy":
+                return new SimpleDateFormat("dd MMMM yyyy").format(date);
+            case "MM/dd/yyyy":
+                return new SimpleDateFormat("MM/dd/yyyy").format(date);
+            default:
+                return new SimpleDateFormat("dd MMMM yyyy").format(date);
+        }
+
+    }
+
 }
