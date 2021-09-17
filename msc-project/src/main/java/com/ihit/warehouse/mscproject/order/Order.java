@@ -29,8 +29,18 @@ public class Order {
     @Column(columnDefinition = "DATE")
     private Date requiredDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "DATE")
+    private Date forwardDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "DATE")
+    private Date approvedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "DATE")
+    private Date sendDate;
+
     @Column(name = "Status", columnDefinition = "enum('Initiated','Froward','Send','Approved')")
-    private String Status;
+    private String status;
 
     private boolean active;
 

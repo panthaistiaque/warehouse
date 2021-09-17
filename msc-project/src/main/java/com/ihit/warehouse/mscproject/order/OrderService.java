@@ -1,12 +1,16 @@
 package com.ihit.warehouse.mscproject.order;
 
+import com.ihit.warehouse.mscproject.config.AppProperty;
 import com.ihit.warehouse.mscproject.util.DateUtil;
 import com.ihit.warehouse.mscproject.util.EmailUtil;
 import com.ihit.warehouse.mscproject.util.Encryption;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,14 +55,24 @@ public class OrderService {
     public List getAll() {
         return orderRepo.findAll();
     }
+    public List getAllBySuppliers(Integer id) {
+        List list = new ArrayList();
+//        list.add(Status.FROWARD);
+        list.add(Status.APPROVED);
+        return orderRepo.findAllBySuppliersIdAndStatusIn(id,list);
+    }
 
     public Order getOne(Integer id) {
         return orderRepo.findById(id).get();
+    }
+    public Order getByIsAndSuppliers(Integer id,Integer suppliedId) {
+        return orderRepo.findByIdAndSuppliersId(id,suppliedId);
     }
 
     public Order orderFroward(Integer id) {
         Order order = getOne(id);
         order.setStatus(Status.FROWARD);
+        order.setForwardDate(new Date());
         String s = "";
         for (OrderDtl dtl: order.getDtl()) {
             s += "<tr>" +
@@ -68,12 +82,19 @@ public class OrderService {
                     "<td style='width='100%'; border: 1px solid black;'>"+dtl.getOrderQty()+" "+dtl.getUnit().getName()+"</td>"+
                     "</tr>";
         }
-        String link = "http://localhost:8080/vendor-singup?tk=" + Encryption.getMd5(String.valueOf(order.getSuppliers().getId())) + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ Encryption.getMd5(String.valueOf(id));
+        String link = "http://localhost:8080/order-shipment?tk=" + order.getSuppliers().getId() + "&v=" + String.valueOf(System.currentTimeMillis())+"&i="+ id;
         mail_body = mail_body.replace("ORDER_LIST",s);
         mail_body = mail_body.replace("REQUSTED_DATE", DateUtil.dateFormater(order.getRequestDate(),"dd MMMM yyyy"));
         mail_body = mail_body.replace("REQUERD_DATE", DateUtil.dateFormater(order.getRequiredDate(),"dd MMMM yyyy"));
         mail_body = mail_body.replace("LOGIN_LINK", link);
         emailUtil.manageMail("NewOrdersList",order.getSuppliers().getEmail(),null,mail_body);
+        return orderRepo.save(order);
+    }
+
+    public Order orderApproved(Integer id, Integer suppliedId) {
+        Order order = getByIsAndSuppliers(id, suppliedId);
+        order.setStatus(Status.APPROVED);
+        order.setApprovedDate(new Date());
         return orderRepo.save(order);
     }
 }

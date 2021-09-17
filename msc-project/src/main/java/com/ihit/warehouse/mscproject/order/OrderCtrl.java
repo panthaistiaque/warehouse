@@ -5,6 +5,7 @@ import com.ihit.warehouse.mscproject.product.BrandModel;
 import com.ihit.warehouse.mscproject.product.ProductService;
 import com.ihit.warehouse.mscproject.product.UnitService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
+import com.ihit.warehouse.mscproject.users.DataBind.User;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,26 @@ public class OrderCtrl extends AppProperty {
             redirect.addFlashAttribute("mess", "This order forwarded successfully");
         }
         modelAndView.setViewName("redirect:/order_list");
+        return modelAndView;
+    }
+
+
+    @GetMapping(value = "/order-shipment")
+    private ModelAndView editOrder(ModelAndView modelAndView,HttpServletRequest request) {
+        Integer token = Integer.valueOf(request.getParameter("tk"));
+        String validity = request.getParameter("v");
+        Integer orderId = Integer.valueOf(request.getParameter("i"));
+        User currentUser = new User();
+        currentUser.setFirstName(suppliersService.findById(token).getName());
+        modelAndView.addObject("user", currentUser);
+        Order order = orderService.orderApproved(orderId,token);
+        if(order.getStatus().equalsIgnoreCase(Status.APPROVED)){
+            modelAndView.addObject("message", "This order APPROVED successfully");
+        }else {
+            modelAndView.addObject("message", "Please retry again");
+        }
+        modelAndView.addObject("list", orderService.getAllBySuppliers(token));
+        modelAndView.setViewName("order/order_list");
         return modelAndView;
     }
 

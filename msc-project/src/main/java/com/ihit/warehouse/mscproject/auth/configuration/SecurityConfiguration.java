@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final String[] UNAUTHENTICATED_URL = {"/vendor-singup","/order-delevary-confirm"};
+    private final String[] UNAUTHENTICATED_URL = {"/vendor-singup","/order-delevary-confirm","/order-shipment","/order-details/*"};
 
     @Autowired
     AuthenticationProvider authenticationProvider;
