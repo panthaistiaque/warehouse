@@ -53,6 +53,8 @@
                                        title="Froward"><span class="fa fa-paper-plane"></span></a>
                                     <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}" class="btn btn-sm btn-default brand-deactivate"><span
                                             class="glyphicon glyphicon-trash"></span></a>
+                                    <a th:if="${listObj.status=='Approved'}" href="#" th:data="${listObj.id}" title="Receive" class="btn btn-sm btn-default order-receive"><span
+                                            class="glyphicon glyphicon-log-in"></span></a>
 
                                 </div>
                             </td>
@@ -137,6 +139,22 @@
                 var id = $(this).attr('data');
                 $.ajax({
                     url: "/order-froward/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            location.reload();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
+                    }
+                });
+            });
+            //----------------------------------------------------------------------
+            $(".order-receive").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/order-receive/" + id,
                     type: "POST",
                     success: function (response, status) {
                         if (status == 'success') {

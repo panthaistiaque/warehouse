@@ -97,4 +97,11 @@ public class OrderService {
         order.setApprovedDate(new Date());
         return orderRepo.save(order);
     }
+
+    public Order orderReceive(Integer id) {
+        Order order = getOne(id);
+        order.setStatus(Status.SEND);
+        order.setSendDate(new Date());
+        return orderRepo.save(order);
+    }
 }
