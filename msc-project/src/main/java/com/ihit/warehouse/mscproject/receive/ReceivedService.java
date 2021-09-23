@@ -14,7 +14,7 @@ import java.util.List;
  * Created by User on 9/22/2021.
  */
 @Service
-public class ReceivedServcie {
+public class ReceivedService {
     @Autowired
     ReceivedRepo receivedRepo;
 
@@ -34,5 +34,9 @@ public class ReceivedServcie {
         }
         received.setDtl(list);
         return receivedRepo.save(received);
+    }
+
+    public List getAll(){
+        return receivedRepo.findAll();
     }
 }

@@ -3,8 +3,7 @@ package com.ihit.warehouse.mscproject.order;
 import com.ihit.warehouse.mscproject.config.AppProperty;
 import com.ihit.warehouse.mscproject.product.ProductService;
 import com.ihit.warehouse.mscproject.product.UnitService;
-import com.ihit.warehouse.mscproject.receive.Received;
-import com.ihit.warehouse.mscproject.receive.ReceivedServcie;
+import com.ihit.warehouse.mscproject.receive.ReceivedService;
 import com.ihit.warehouse.mscproject.suppliers.service.SuppliersService;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
 import com.ihit.warehouse.mscproject.util.Status;
@@ -30,7 +29,7 @@ public class OrderCtrl extends AppProperty {
     @Autowired
     UnitService unitService;
     @Autowired
-    ReceivedServcie receivedServcie;
+    ReceivedService receivedService;
 
     @GetMapping(value = "/order_form")
     private ModelAndView getBrand(ModelAndView modelAndView) {
@@ -91,7 +90,7 @@ public class OrderCtrl extends AppProperty {
     private ModelAndView orderReceive(ModelAndView modelAndView,@PathVariable("id") Integer id,RedirectAttributes redirect) {
         Order order = orderService.orderReceive(id);
 
-        receivedServcie.createNewReceive(order);
+        receivedService.createNewReceive(order);
         if(order.getStatus().equalsIgnoreCase(Status.SEND)){
             redirect.addFlashAttribute("mess", "This order forwarded successfully");
         }
