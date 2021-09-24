@@ -72,7 +72,7 @@ public class ShipmentRepo {
 
     public void orderFroward(Integer id) {
         String sql = "update shipment_master set status=? where id= ?";
-        jdbcTemplate.update(sql, Status.FROWARD, id);
+        jdbcTemplate.update(sql, Status.SHIPMENT_STATUS.FROWARD, id);
     }
 
     public Map<String, Object> findOneOrderById(String token, String orderId) {

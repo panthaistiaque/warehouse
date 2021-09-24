@@ -46,7 +46,7 @@ public class OrderService {
             " This email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please delete all copies and notify the sender immediately. <br>";
     public Order save(Order order){
         if(order.getId()==null){
-            order.setStatus(Status.INITIATED);
+            order.setStatus(Status.ORDER_STATUS.INITIATED);
             order.setActive(true);
         }
         return orderRepo.save(order);
@@ -58,7 +58,7 @@ public class OrderService {
     public List getAllBySuppliers(Integer id) {
         List list = new ArrayList();
 //        list.add(Status.FROWARD);
-        list.add(Status.APPROVED);
+        list.add(Status.ORDER_STATUS.APPROVED);
         return orderRepo.findAllBySuppliersIdAndStatusIn(id,list);
     }
 
@@ -71,7 +71,7 @@ public class OrderService {
 
     public Order orderFroward(Integer id) {
         Order order = getOne(id);
-        order.setStatus(Status.FROWARD);
+        order.setStatus(Status.ORDER_STATUS.FROWARD);
         order.setForwardDate(new Date());
         String s = "";
         for (OrderDtl dtl: order.getDtl()) {
@@ -93,14 +93,14 @@ public class OrderService {
 
     public Order orderApproved(Integer id, Integer suppliedId) {
         Order order = getByIsAndSuppliers(id, suppliedId);
-        order.setStatus(Status.APPROVED);
+        order.setStatus(Status.ORDER_STATUS.APPROVED);
         order.setApprovedDate(new Date());
         return orderRepo.save(order);
     }
 
     public Order orderReceive(Integer id) {
         Order order = getOne(id);
-        order.setStatus(Status.SEND);
+        order.setStatus(Status.ORDER_STATUS.RECEIVE);
         order.setSendDate(new Date());
         return orderRepo.save(order);
     }

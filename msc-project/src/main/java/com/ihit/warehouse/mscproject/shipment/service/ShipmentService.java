@@ -53,7 +53,7 @@ public class ShipmentService {
             obj.put("orderMasterId", orderMasterId);
         }
         int[] detailsId = shipmentRepo.saveShipmentDetails(maps);
-        System.out.println(Status.INITIATED);
+        System.out.println(Status.SHIPMENT_STATUS.INITIATED);
         return null;
     }
 

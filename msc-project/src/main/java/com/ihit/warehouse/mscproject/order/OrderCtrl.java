@@ -80,7 +80,7 @@ public class OrderCtrl extends AppProperty {
     @PostMapping(value = "/order-froward/{id}")
     private ModelAndView orderFroward(ModelAndView modelAndView,@PathVariable("id") Integer id,RedirectAttributes redirect) {
         Order order = orderService.orderFroward(id);
-        if(order.getStatus().equalsIgnoreCase(Status.FROWARD)){
+        if(order.getStatus().equalsIgnoreCase(Status.ORDER_STATUS.FROWARD)){
             redirect.addFlashAttribute("mess", "This order forwarded successfully");
         }
         modelAndView.setViewName("redirect:/order_list");
@@ -91,8 +91,8 @@ public class OrderCtrl extends AppProperty {
         Order order = orderService.orderReceive(id);
 
         receivedService.createNewReceive(order);
-        if(order.getStatus().equalsIgnoreCase(Status.SEND)){
-            redirect.addFlashAttribute("mess", "This order forwarded successfully");
+        if(order.getStatus().equalsIgnoreCase(Status.ORDER_STATUS.RECEIVE)){
+            redirect.addFlashAttribute("mess", "This order RECEIVE successfully");
         }
         modelAndView.setViewName("redirect:/order_list");
         return modelAndView;
@@ -108,7 +108,7 @@ public class OrderCtrl extends AppProperty {
         currentUser.setFirstName(suppliersService.findById(token).getName());
         modelAndView.addObject("user", currentUser);
         Order order = orderService.orderApproved(orderId,token);
-        if(order.getStatus().equalsIgnoreCase(Status.APPROVED)){
+        if(order.getStatus().equalsIgnoreCase(Status.ORDER_STATUS.APPROVED)){
             modelAndView.addObject("message", "This order APPROVED successfully");
         }else {
             modelAndView.addObject("message", "Please retry again");

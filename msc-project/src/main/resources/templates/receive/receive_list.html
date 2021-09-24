@@ -24,7 +24,7 @@
                             <th class="col-md-3">suppliers Name</th>
                             <th class="col-md-1">Request Date</th>
                             <th class="col-md-1">Required Date</th>
-                            <th class="col-md-3">Note</th>
+                            <!--<th class="col-md-3">Note</th>-->
                             <th class="col-md-1">Status</th>
                             <th class="col-md-1"></th>
                         </tr>
@@ -33,8 +33,8 @@
                         <tr th:each="listObj:${list}">
                             <td th:text="${listObj.id}"></td>
                             <td th:text="${listObj.suppliers.name }"></td>
-                            <!--<td th:text="${#dates.format(listObj.requestDate, 'dd MMM yyyy')}"></td>-->
-                            <!--<td th:text="${#dates.format(listObj.requiredDate, 'dd MMM yyyy')}"></td>-->
+                            <td th:text="${#dates.format(listObj.receiveDate, 'dd MMM yyyy')}"></td>
+                            <td th:text="${#dates.format(listObj.approvedDate, 'dd MMM yyyy')}"></td>
                             <!--<td th:text="${listObj.note}"></td>-->
                             <td>
                                 <div th:switch="${listObj.status}" th:remove="tag">

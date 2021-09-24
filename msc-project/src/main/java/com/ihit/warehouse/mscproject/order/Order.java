@@ -39,7 +39,7 @@ public class Order {
     @Column(columnDefinition = "DATE")
     private Date sendDate;
 
-    @Column(name = "Status", columnDefinition = "enum('Initiated','Froward','Send','Approved')")
+    @Column(name = "Status", columnDefinition = "enum('Initiated','Froward','Receive','Approved')")
     private String status;
 
     private boolean active;

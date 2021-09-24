@@ -21,7 +21,7 @@ public class ReceivedService {
     public Received createNewReceive(Order order){
         Received received = new Received();
         received.setOrder(order);
-        received.setStatus(Status.INITIATED);
+        received.setStatus(Status.RECEIVE_STATUS.INITIATED);
         received.setReceiveDate(new Date());
         received.setSuppliers(order.getSuppliers());
         List list = new ArrayList();
