@@ -6,11 +6,10 @@
     <div class="content">
         <div class="header">
 
-            <h1 class="page-title">Category List</h1>
+            <h1 class="page-title">Receive List</h1>
             <ul class="breadcrumb">
-                <li><a href="/">Product</a></li>
-                <li><a>Category</a></li>
-                <li class="active">Category List</li>
+                <li><a href="/">Receive</a></li>
+                <li class="active">Receive List</li>
             </ul>
 
         </div>
@@ -46,7 +45,7 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default order-details"
+                                    <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default receive-details"
                                        title="Details"><span class="glyphicon glyphicon-new-window"></span></a>
                                     <a th:if="${listObj.status=='Initiated'}" class="btn btn-sm btn-default"
                                        title="Edit"><span class="fa fa-pencil"></span></a>
@@ -119,4 +118,13 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            alert();
+            $(".receive-details").click(function () {
+//            var id = $(this).attr('data');
+                alert();
+            });
+        });
+    </script>
 </div>
