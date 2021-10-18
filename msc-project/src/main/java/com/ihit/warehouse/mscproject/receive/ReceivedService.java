@@ -39,4 +39,8 @@ public class ReceivedService {
     public List getAll(){
         return receivedRepo.findAll();
     }
+
+    public Received getById(Integer id){
+        return receivedRepo.findById(id).get();
+    }
 }

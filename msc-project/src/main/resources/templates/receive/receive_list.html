@@ -69,31 +69,30 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="order-details-form" role="dialog">
+    <div class="modal fade" id="receive-details-form" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="Order_Details_id">Order Details ()</h4>
+                    <h4 class="modal-title" id="receive_Details_id">Order Details ()</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-borderless">
                         <tr>
                             <td>Suppliers Name :</td>
-                            <td><input class="form-control" readonly id="order_Details_suppliers"/></td>
+                            <td><input class="form-control" readonly id="receive_Details_suppliers"/></td>
                         </tr>
                         <tr>
-                            <td>Request Date :</td>
-                            <td><input class="form-control" readonly id="order_details_requestDate"/></td>
+                            <td>Receive Date :</td>
+                            <td><input class="form-control" readonly id="receive_details_receiveDate"/></td>
                         </tr>
                         <tr>
-                            <td>Required Date :</td>
-                            <td><input class="form-control" readonly id="order_Details_requiredDate"/></td>
+                            <td>Order Ref :</td>
+                            <td><input class="form-control" readonly id="receive_Details_orderRef"/></td>
                         </tr>
                         <tr>
                             <td>Note :</td>
-                            <td><textarea class="form-control" readonly id="order_Details_note"
-                                          style="resize:none"></textarea></td>
+                            <td> <input class="form-control" readonly id="receive_Details_status"/></td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -104,9 +103,10 @@
                                         <th>Product Name</th>
                                         <th>Brand</th>
                                         <th>Qrt</th>
+                                        <th>Confirm Qrt</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="order_details_table"></tbody>
+                                    <tbody id="receive_details_table"></tbody>
                                 </table>
                             </td>
                         </tr>
@@ -120,10 +120,36 @@
     </div>
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
-            alert();
+//            alert();
             $(".receive-details").click(function () {
-//            var id = $(this).attr('data');
-                alert();
+            var id = $(this).attr('data');
+                $.ajax({
+                    url: "/receive-details/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            console.log(response);
+                            $("#receive_Details_id").html("Receive Details (#" + response.id + ")");
+                            $("#receive_Details_suppliers").val( response.suppliers.name);
+                            $("#receive_details_receiveDate").val(response.receiveDate.split('T')[0]);
+                            $("#receive_Details_orderRef").val("Order ID # " +response.order.id+" , Date # "+response.order.requestDate.split('T')[0]);
+                            $("#receive_Details_status").val(response.status);
+
+                            var tex = "";
+                            for (i = 0; i < response.dtl.length; i++) {
+                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text'/></td></tr>"
+                            }
+                            console.log(tex);
+                            $("#receive_details_table").html(tex);
+                            $("#receive-details-form").modal('show');
+                        }else {
+                            toastr.error(status);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
+                    }
+                });
             });
         });
     </script>
