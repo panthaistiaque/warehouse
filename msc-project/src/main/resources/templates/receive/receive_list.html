@@ -92,7 +92,7 @@
                         </tr>
                         <tr>
                             <td>Note :</td>
-                            <td> <input class="form-control" readonly id="receive_Details_status"/></td>
+                            <td><input class="form-control" readonly id="receive_Details_status"/></td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -111,6 +111,7 @@
                             </td>
                         </tr>
                     </table>
+                    <button type="button" class="btn btn-default pull-right order-confirm">Confirm</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -120,34 +121,62 @@
     </div>
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
-//            alert();
+            var orderObj = "";
             $(".receive-details").click(function () {
-            var id = $(this).attr('data');
+                var id = $(this).attr('data');
                 $.ajax({
                     url: "/receive-details/" + id,
                     type: "POST",
                     success: function (response, status) {
                         if (status == 'success') {
-                            console.log(response);
+                            orderObj = response;
                             $("#receive_Details_id").html("Receive Details (#" + response.id + ")");
-                            $("#receive_Details_suppliers").val( response.suppliers.name);
+                            $("#receive_Details_suppliers").val(response.suppliers.name);
                             $("#receive_details_receiveDate").val(response.receiveDate.split('T')[0]);
-                            $("#receive_Details_orderRef").val("Order ID # " +response.order.id+" , Date # "+response.order.requestDate.split('T')[0]);
+                            $("#receive_Details_orderRef").val("Order ID # " + response.order.id + " , Date # " + response.order.requestDate.split('T')[0]);
                             $("#receive_Details_status").val(response.status);
 
                             var tex = "";
                             for (i = 0; i < response.dtl.length; i++) {
-                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text'/></td></tr>"
+                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text' style='width:50px;'/></td></tr>"
                             }
-                            console.log(tex);
                             $("#receive_details_table").html(tex);
                             $("#receive-details-form").modal('show');
-                        }else {
+                        } else {
                             toastr.error(status);
                         }
                     },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         toastr.error(XMLHttpRequest.status);
+                    }
+                });
+            });
+            $(".order-confirm").click(function () {
+                var temp = orderObj;
+                $("#receive_details_table tr").each(function () {
+                    var self = $(this);
+                    var col_1_value = self.find("td:eq(0)").text().trim();
+                    var col_2_value = self.find("td:eq(1)").text().trim();
+                    var col_3_value = self.find("td:eq(2)").text().trim();
+                    var col_4_value = self.find("td:eq(3)").text().trim();
+                    var col_5_value = self.find("td:eq(4) input[type='text']").val();
+                    for (i = 0; i < temp.dtl.length; i++) {
+                        if (temp.dtl[i].product.name === col_2_value) {
+                            temp.dtl[i].approveQty = col_5_value;
+                        }
+                    }
+                });
+                console.log(temp);
+                $.ajax({
+                    url: "/saveReceive",
+                    type: "POST",
+                    data: JSON.stringify(temp),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        alert("test ok");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
                     }
                 });
             });
