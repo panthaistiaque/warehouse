@@ -2,6 +2,7 @@ package com.ihit.warehouse.mscproject.receive;
 
 import com.ihit.warehouse.mscproject.order.Order;
 import com.ihit.warehouse.mscproject.order.OrderDtl;
+import com.ihit.warehouse.mscproject.stock.StocksService;
 import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ReceivedService {
     @Autowired
     ReceivedRepo receivedRepo;
+    @Autowired
+    StocksService stocksService;
 
     public Received createNewReceive(Order order){
         Received received = new Received();
@@ -36,11 +39,19 @@ public class ReceivedService {
         return receivedRepo.save(received);
     }
 
+
+
     public List getAll(){
         return receivedRepo.findAll();
     }
 
     public Received getById(Integer id){
         return receivedRepo.findById(id).get();
+    }
+
+    public Received receivedConfirm(Received received){
+        receivedRepo.save(received);
+        stocksService.stickRaise(received);
+        return received;
     }
 }

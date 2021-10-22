@@ -3,6 +3,7 @@ package com.ihit.warehouse.mscproject.receive;
 import com.ihit.warehouse.mscproject.config.AppProperty;
 import com.ihit.warehouse.mscproject.order.Order;
 import com.ihit.warehouse.mscproject.users.DataBind.User;
+import com.ihit.warehouse.mscproject.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -36,6 +38,9 @@ public class ReceiveCtrl extends AppProperty {
 
     @PostMapping(value = "/saveReceive")
     private ModelAndView saveReceiveConfirm(ModelAndView modelAndView, RedirectAttributes redirect, @RequestBody Received req) {
+        req.setStatus(Status.RECEIVE_STATUS.APPROVED);
+        req.setApprovedDate(new Date());
+        receivedService.receivedConfirm(req);
 //        order = orderService.save(order);
 //        if(order.getId()>0){
 //            redirect.addFlashAttribute("mess", "Order created successfully");
