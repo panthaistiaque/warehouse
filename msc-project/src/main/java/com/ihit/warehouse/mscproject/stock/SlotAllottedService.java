@@ -1,5 +1,6 @@
 package com.ihit.warehouse.mscproject.stock;
 
+import com.ihit.warehouse.mscproject.config.Shelf;
 import com.ihit.warehouse.mscproject.config.Slot;
 import com.ihit.warehouse.mscproject.config.SlotRepo;
 import com.ihit.warehouse.mscproject.product.ProductModel;
@@ -73,5 +74,9 @@ public class SlotAllottedService {
 
     public SlotAllotted findHalfFullSlot(ProductModel product) {
         return slotAllottedRepo.findByProductAndIsFull(product, false);
+    }
+    public List usedSlotByShelf(Shelf shelf){
+//        return slotCustomRepo.usedSlotByShelf(shelf_id);
+        return slotAllottedRepo.findAllBySlotShelf(shelf);
     }
 }

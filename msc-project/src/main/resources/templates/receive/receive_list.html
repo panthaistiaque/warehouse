@@ -53,7 +53,7 @@
                                        class="btn btn-sm btn-default order-froward"
                                        title="Froward"><span class="fa fa-paper-plane"></span></a>
                                     <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}"
-                                       class="btn btn-sm btn-default brand-deactivate"><span
+                                       class="btn btn-sm btn-default receive-deactivate"><span
                                             class="glyphicon glyphicon-trash"></span></a>
                                     <a th:if="${listObj.status=='Approved'}" href="#" th:data="${listObj.id}"
                                        title="Receive" class="btn btn-sm btn-default order-receive"><span
@@ -122,6 +122,21 @@
     <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
             var orderObj = "";
+            $(".receive-deactivate").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/receive-delete/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            location.reload();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
+                    }
+                });
+            });
             $(".receive-details").click(function () {
                 var id = $(this).attr('data');
                 $.ajax({
@@ -129,6 +144,7 @@
                     type: "POST",
                     success: function (response, status) {
                         if (status == 'success') {
+                            console.log(response);
                             orderObj = response;
                             $("#receive_Details_id").html("Receive Details (#" + response.id + ")");
                             $("#receive_Details_suppliers").val(response.suppliers.name);
@@ -137,8 +153,15 @@
                             $("#receive_Details_status").val(response.status);
 
                             var tex = "";
-                            for (i = 0; i < response.dtl.length; i++) {
-                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text' style='width:50px;'/></td></tr>"
+                            if (response.status === 'Initiated') {
+                                for (i = 0; i < response.dtl.length; i++) {
+                                    tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text' style='width:50px;'/></td></tr>"
+                                }
+                            }else {
+                                for (i = 0; i < response.dtl.length; i++) {
+                                    tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td>" + response.dtl[i].approveQty + "</td></tr>"
+                                }
+                                $(".order-confirm").hide();
                             }
                             $("#receive_details_table").html(tex);
                             $("#receive-details-form").modal('show');

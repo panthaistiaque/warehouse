@@ -21,6 +21,10 @@ public class Shelf {
     private Integer id;
     private String name;
     private Integer slotNumber;
+    @Transient
+    private Integer usedSlot;
+    @Transient
+    private List usedSlotDtl;
     @Column(length = 10)
     private String shortName;
 

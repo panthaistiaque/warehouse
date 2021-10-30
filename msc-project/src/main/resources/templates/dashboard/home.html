@@ -11,10 +11,11 @@
             padding-right: 0%;
             border-radius: 3px;
         }
+
         .col-md-1 {
             width: 11.333% !important;
             height: 35px;
-            padding-left:0;
+            padding-left: 0;
         }
     </style>
     <div class="content">
@@ -29,23 +30,76 @@
 
         </div>
         <div class="main-content">
-            <div  style="margin-left: 0" class="row">
-                <span  id="desh_content"></span>
+            <div style="margin-left: 0" class="row">
+                <span id="desh_content"></span>
             </div>
 
         </div>
     </div>
+    <div class="modal fade" id="shelf-details" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="shelf_Details_id">Shelf Details ()</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead></thead>
+                            <tr>
+                                <td>SL</td>
+                                <td>Slot Id</td>
+                                <td>Slot Name</td>
+                                <td>Product Name</td>
+                                <td>Product Qty</td>
+                            </tr>
+                        </thead>
+                        <tbody id="shelf_details_table"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        $(document).ready(function(){
-            $.post("/shelf", { },function(data, status){
+        $(document).ready(function () {
+            var arrList = [];
+            $.post("/shelf", {}, function (data, status) {
                 console.log(data);
                 console.log(status);
-                var str= "";
-                for(i=0; i<data.length; i++){
-                    str +="<div class='col-md-1 vdvv progress'   ><div class='progress-bar progress-bar-warning' style='width:"+((100/data[i].slotNumber)*4)+"%;'><b class='center-block' style='color: black'>"+data[i].name+"</b></div></div>";
+                var str = "";
+                for (i = 0; i < data.length; i++) {
+                    str += "<div class='col-md-1 vdvv progress' data='" + data[i].id + "'><div class='progress-bar progress-bar-warning'  style='width:" + ((100 / data[i].slotNumber) * data[i].usedSlot) + "%;'><b class='center-block' style='color: black'>" + data[i].name + "</b></div></div>";
                 }
+                arrList = data;
                 $("#desh_content").append(str);
-            } );
+            });
+
+
+            $(document).on('click', '.vdvv', function () {
+                var id = $(this).attr('data');
+                console.log(arrList);
+                var dtl = [];
+                for (i = 0; i < arrList.length; i++) {
+                    if (arrList[i].id == id ) {
+                        dtl = arrList[i].usedSlotDtl;
+                        var tex = '';
+                        console.log(dtl);
+                        $("#shelf_Details_id").html("Shelf Details #" + arrList[i].id + ", Name #" + arrList[i].name);
+                        for (j = 0; j < dtl.length; j++) {
+                            tex +='<tr><td>'+(j+1)+'</td><td>'+dtl[j].slot.id+'</td><td>'+dtl[j].slot.name+'</td><td>'+dtl[j].product.name+'</td><td>'+dtl[j].qty +' '+dtl[j].unit.name +'</td></tr>';
+                        }
+                        $("#shelf_details_table").html(tex);
+                        break;
+                    }
+
+                }
+                if(dtl.length>0){
+                    $("#shelf-details").modal('show');
+                }
+            });
         });
     </script>
 </div>

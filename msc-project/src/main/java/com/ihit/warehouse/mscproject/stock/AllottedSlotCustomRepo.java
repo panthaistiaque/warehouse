@@ -35,4 +35,13 @@ public class AllottedSlotCustomRepo {
         List<Slot> list = jdbcTemplate.query(sb.toString(),new BeanPropertyRowMapper(Slot.class));
         return list;
     }
+
+    public List<SlotAllotted> usedSlotByShelf(Integer id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT sa.* FROM slot_allotted sa  ");
+        sb.append(" INNER JOIN slot s ON s.id = sa.slot_id ");
+        sb.append(" WHERE s.shelf_id = "+ id + "");
+        List<SlotAllotted> list = jdbcTemplate.query(sb.toString(),new BeanPropertyRowMapper(SlotAllotted.class));
+        return list;
+    }
 }

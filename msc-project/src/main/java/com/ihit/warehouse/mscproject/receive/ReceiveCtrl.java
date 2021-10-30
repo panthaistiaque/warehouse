@@ -48,4 +48,11 @@ public class ReceiveCtrl extends AppProperty {
         modelAndView.setViewName("redirect:/receive_list");
         return modelAndView;
     }
+
+    @PostMapping(value = "/receive-delete/{id}")
+    private ModelAndView receiveDelete(ModelAndView modelAndView,@PathVariable("id") Integer id) {
+        receivedService.receiveDelete(id);
+        modelAndView.setViewName("redirect:/brand_list");
+        return modelAndView;
+    }
 }

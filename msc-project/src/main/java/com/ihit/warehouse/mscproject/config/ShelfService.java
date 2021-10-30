@@ -1,8 +1,10 @@
 package com.ihit.warehouse.mscproject.config;
 
+import com.ihit.warehouse.mscproject.stock.SlotAllottedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +15,17 @@ public class ShelfService {
 
     @Autowired
     private shelfRepo shelfRepo;
+    @Autowired
+    private SlotAllottedService slotAllottedService;
 
     public List getAll(){
-        return shelfRepo.findAll();
+        List<Shelf> shelfList = new ArrayList<>();
+        shelfList =shelfRepo.findAll();
+        for ( Shelf shelf: shelfList) {
+            List  list = slotAllottedService.usedSlotByShelf(shelf);
+            shelf.setUsedSlot(list.size());
+            shelf.setUsedSlotDtl(list);
+        }
+        return shelfList;
     }
 }

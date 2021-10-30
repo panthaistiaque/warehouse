@@ -1,5 +1,7 @@
 package com.ihit.warehouse.mscproject.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,5 +21,8 @@ public class Slot {
 
 //    @OneToMany
 //    private Shelf shelf;
+    @OneToOne
+    @JsonIgnore
+    private Shelf shelf;
 
 }

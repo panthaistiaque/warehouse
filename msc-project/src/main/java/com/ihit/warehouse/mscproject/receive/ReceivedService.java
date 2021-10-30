@@ -54,4 +54,7 @@ public class ReceivedService {
         stocksService.stickRaise(received);
         return received;
     }
+    public void receiveDelete(Integer id){
+        receivedRepo.deleteById(id);
+    }
 }
