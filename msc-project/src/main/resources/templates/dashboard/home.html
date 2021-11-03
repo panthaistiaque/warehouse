@@ -52,6 +52,7 @@
                                 <td>Slot Name</td>
                                 <td>Product Name</td>
                                 <td>Product Qty</td>
+                                <td>In Date</td>
                             </tr>
                         </thead>
                         <tbody id="shelf_details_table"></tbody>
@@ -89,7 +90,7 @@
                         console.log(dtl);
                         $("#shelf_Details_id").html("Shelf Details #" + arrList[i].id + ", Name #" + arrList[i].name);
                         for (j = 0; j < dtl.length; j++) {
-                            tex +='<tr><td>'+(j+1)+'</td><td>'+dtl[j].slot.id+'</td><td>'+dtl[j].slot.name+'</td><td>'+dtl[j].product.name+'</td><td>'+dtl[j].qty +' '+dtl[j].unit.name +'</td></tr>';
+                            tex +='<tr><td>'+(j+1)+'</td><td>'+dtl[j].slot.id+'</td><td>'+dtl[j].slot.name+'</td><td>'+dtl[j].product.name+'</td><td>'+dtl[j].qty +' '+dtl[j].unit.name +'</td><td>'+dtl[j].lastUpdateOn.split('T')[0]+'</td></tr>';
                         }
                         $("#shelf_details_table").html(tex);
                         break;

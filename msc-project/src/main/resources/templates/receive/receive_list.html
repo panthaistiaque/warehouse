@@ -47,17 +47,10 @@
                                 <div class="btn-group">
                                     <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default receive-details"
                                        title="Details"><span class="glyphicon glyphicon-new-window"></span></a>
-                                    <a th:if="${listObj.status=='Initiated'}" class="btn btn-sm btn-default"
-                                       title="Edit"><span class="fa fa-pencil"></span></a>
-                                    <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}"
-                                       class="btn btn-sm btn-default order-froward"
-                                       title="Froward"><span class="fa fa-paper-plane"></span></a>
+
                                     <a th:if="${listObj.status=='Initiated'}" href="#" th:data="${listObj.id}"
                                        class="btn btn-sm btn-default receive-deactivate"><span
                                             class="glyphicon glyphicon-trash"></span></a>
-                                    <a th:if="${listObj.status=='Approved'}" href="#" th:data="${listObj.id}"
-                                       title="Receive" class="btn btn-sm btn-default order-receive"><span
-                                            class="glyphicon glyphicon-log-in"></span></a>
 
                                 </div>
                             </td>
@@ -124,18 +117,21 @@
             var orderObj = "";
             $(".receive-deactivate").click(function () {
                 var id = $(this).attr('data');
-                $.ajax({
-                    url: "/receive-delete/" + id,
-                    type: "POST",
-                    success: function (response, status) {
-                        if (status == 'success') {
-                            location.reload();
+
+                if (confirm('Do you want to delete it?')) {
+                    $.ajax({
+                        url: "/receive-delete/" + id,
+                        type: "POST",
+                        success: function (response, status) {
+                            if (status == 'success') {
+                                location.reload();
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            toastr.error(XMLHttpRequest.status);
                         }
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        toastr.error(XMLHttpRequest.status);
-                    }
-                });
+                    });
+                }
             });
             $(".receive-details").click(function () {
                 var id = $(this).attr('data');
@@ -157,7 +153,7 @@
                                 for (i = 0; i < response.dtl.length; i++) {
                                     tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td><input type='text' style='width:50px;'/></td></tr>"
                                 }
-                            }else {
+                            } else {
                                 for (i = 0; i < response.dtl.length; i++) {
                                     tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].orderQty + " " + response.dtl[i].unit.name + "</td><td>" + response.dtl[i].approveQty + "</td></tr>"
                                 }
@@ -183,20 +179,23 @@
                     var col_3_value = self.find("td:eq(2)").text().trim();
                     var col_4_value = self.find("td:eq(3)").text().trim();
                     var col_5_value = self.find("td:eq(4) input[type='text']").val();
+//                    console.log(col_2_value +" :: "+col_5_value);
                     for (i = 0; i < temp.dtl.length; i++) {
-                        if (temp.dtl[i].product.name === col_2_value) {
+                        if (temp.dtl[i].product.name == col_2_value) {
                             temp.dtl[i].approveQty = col_5_value;
                         }
                     }
                 });
-                console.log(temp);
+//                console.log(temp);
                 $.ajax({
                     url: "/saveReceive",
                     type: "POST",
                     data: JSON.stringify(temp),
                     contentType: "application/json; charset=utf-8",
-                    success: function (response) {
-                        alert("test ok");
+                    success: function (response, status) {
+                        if (status == 'success') {
+                            location.reload();
+                        }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);
