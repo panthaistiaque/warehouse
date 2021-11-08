@@ -1,0 +1,50 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">New Delivery</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Delivery</a></li>
+                <li class="active">New Delivery</li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6" style="border: solid #d0d0d6 thin; min-height: 100vh;overflow-x:auto;">
+                        <h3>Available Stock</h3>
+                        <hr>
+                        <span id="stock_content_table"></span>
+                    </div>
+                    <div class="col-md-6" style="border: solid #d0d0d6 thin; min-height: 100vh">
+                        <h3>Delivery Information</h3>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $.post("/stocks-list", {}, function (data, status) {
+                console.log(data);
+                var tab = '<table class="table table-bordered">';
+                for (i = 0; i < data.length; i++) {
+                    tab += '<tr><td><a  class="s-stoke" data="'+data[i].id+'" >'+data[i].product.name+' <span class="pull-right">'+data[i].qty+'</span></a></td></tr>';
+                }
+                tab += '</table>';
+                $("#stock_content_table").append(tab);
+            });
+//            $('.s-data').onclick(function () {
+//                alert();
+//            })
+            $(document).on("click", "a.s-stoke" , function() {
+//                $(this).parent().remove();
+               alert($(this).attr('data'));
+            });
+        });
+    </script>
+</div>

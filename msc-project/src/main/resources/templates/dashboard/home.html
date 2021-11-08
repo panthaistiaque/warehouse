@@ -33,6 +33,9 @@
             <div style="margin-left: 0" class="row">
                 <span id="desh_content"></span>
             </div>
+            <div style="margin-left: 0" class="row">
+                <span id="desh_content_table"></span>
+            </div>
 
         </div>
     </div>
@@ -46,14 +49,14 @@
                 <div class="modal-body">
                     <table class="table table-bordered">
                         <thead></thead>
-                            <tr>
-                                <td>SL</td>
-                                <td>Slot Id</td>
-                                <td>Slot Name</td>
-                                <td>Product Name</td>
-                                <td>Product Qty</td>
-                                <td>In Date</td>
-                            </tr>
+                        <tr>
+                            <td>SL</td>
+                            <td>Slot Id</td>
+                            <td>Slot Name</td>
+                            <td>Product Name</td>
+                            <td>Product Qty</td>
+                            <td>In Date</td>
+                        </tr>
                         </thead>
                         <tbody id="shelf_details_table"></tbody>
                     </table>
@@ -77,6 +80,15 @@
                 arrList = data;
                 $("#desh_content").append(str);
             });
+            $.post("/stocks-list", {}, function (data, status) {
+                console.log(data);
+                var tab = '<table class="table table-bordered"><tr><td>SL</td><td>Category</td><td>Product name</td><td>Company Name</td><td>Qty</td><td>Change Date</td></tr>';
+                for (i = 0; i < data.length; i++) {
+                    tab += '<tr><td>'+(i+1)+'</td><td>'+data[i].product.category.name+'</td><td>'+data[i].product.name+'</td><td>'+data[i].product.brand.name+'</td><td>'+data[i].qty+'</td><td>'+data[i].lastUpdateOn.split("T")[0]+'</td></tr>';
+                }
+                tab += '</table>';
+                $("#desh_content_table").append(tab);
+            });
 
 
             $(document).on('click', '.vdvv', function () {
@@ -84,20 +96,20 @@
                 console.log(arrList);
                 var dtl = [];
                 for (i = 0; i < arrList.length; i++) {
-                    if (arrList[i].id == id ) {
+                    if (arrList[i].id == id) {
                         dtl = arrList[i].usedSlotDtl;
                         var tex = '';
                         console.log(dtl);
                         $("#shelf_Details_id").html("Shelf Details #" + arrList[i].id + ", Name #" + arrList[i].name);
                         for (j = 0; j < dtl.length; j++) {
-                            tex +='<tr><td>'+(j+1)+'</td><td>'+dtl[j].slot.id+'</td><td>'+dtl[j].slot.name+'</td><td>'+dtl[j].product.name+'</td><td>'+dtl[j].qty +' '+dtl[j].unit.name +'</td><td>'+dtl[j].lastUpdateOn.split('T')[0]+'</td></tr>';
+                            tex += '<tr><td>' + (j + 1) + '</td><td>' + dtl[j].slot.id + '</td><td>' + dtl[j].slot.name + '</td><td>' + dtl[j].product.name + '</td><td>' + dtl[j].qty + ' ' + dtl[j].unit.name + '</td><td>' + dtl[j].lastUpdateOn.split('T')[0] + '</td></tr>';
                         }
                         $("#shelf_details_table").html(tex);
                         break;
                     }
 
                 }
-                if(dtl.length>0){
+                if (dtl.length > 0) {
                     $("#shelf-details").modal('show');
                 }
             });

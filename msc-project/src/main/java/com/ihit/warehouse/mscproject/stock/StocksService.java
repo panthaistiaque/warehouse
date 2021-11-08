@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by user on 10/22/2021.
@@ -17,6 +18,10 @@ public class StocksService {
 
     @Autowired
     private SlotAllottedService slotAllottedService;
+
+    public List stockList(){
+        return stocksRepo.findAllByOrderByProductCategoryNameAscProductNameAsc();
+    }
 
     public void stickRaise(Received received) {
         for (ReceivedDtl model : received.getDtl()) {
