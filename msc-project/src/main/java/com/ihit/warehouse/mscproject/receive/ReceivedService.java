@@ -39,8 +39,6 @@ public class ReceivedService {
         return receivedRepo.save(received);
     }
 
-
-
     public List getAll(){
         return receivedRepo.findAll();
     }

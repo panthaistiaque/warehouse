@@ -1,0 +1,158 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+    <div class="content">
+        <div class="header">
+            <h1 class="page-title">Delivery List</h1>
+            <ul class="breadcrumb">
+                <li><a href="/">Delivery</a></li>
+                <li class="active">Delivery List</li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="col-md-12">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">SL</th>
+                        <th>Note</th>
+                        <th class="col-md-2">Delivery Date</th>
+                        <th class="col-md-1">Status</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="listObj:${list}">
+                        <td th:text="${listObj.id}"></td>
+                        <td th:text="${listObj.note }"></td>
+                        <td th:text="${#dates.format(listObj.deliveryDate, 'dd MMM yyyy')}"></td>
+                        <td>
+                            <div th:switch="${listObj.status}" th:remove="tag">
+                                <span th:case="Initiated"><span class="label label-default">Initiated</span></span>
+                                <span th:case="Competed"><span class="label label-success">Competed</span></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" th:data="${listObj.id}" class="btn btn-sm btn-default delivery-details"><span
+                                        class="glyphicon glyphicon-edit"></span></a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delivery-details-form" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="delivery-details-id">Delivery Details ()</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless table-condensed">
+                        <tr>
+                            <td>Delivery Date :</td>
+                            <td><input class="form-control" readonly id="delivery-details-deliveryDate"/></td>
+                        </tr>
+                        <tr>
+                            <td>Complete Date :</td>
+                            <td><input class="form-control" readonly id="delivery-details-completeDate"/></td>
+                        </tr>
+                        <tr>
+                            <td>Note :</td>
+                            <td><textarea class="form-control" readonly id="delivery-details-note" style="resize:none"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Status :</td>
+                            <td id="delivery-details-status"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Product Name</th>
+                                            <th>Brand</th>
+                                            <th>Qrt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="delivery-details-table"></tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" id="delivery-confirm" class="btn btn-default pull-right delivery-confirm">Confirm</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".delivery-details").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/delivery-details/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        console.log(response);
+                        if (status == 'success') {
+                            $("#delivery-details-id").html("Delivery Details (#" + response.id + ")");
+                            $("#delivery-details-deliveryDate").val(response.deliveryDate.split('T')[0]);
+                            $("#delivery-details-note").val(response.note);
+                            $("#delivery-details-completeDate").val(response.completeDate != null?response.completeDate.split('T')[0]:'');
+                            if(response.status =='Initiated'){
+                                $("#delivery-confirm").attr({data: response.id});
+                                $("#delivery-details-status").html('<span class="label label-default">Initiated</span>');
+                                $("#delivery-confirm").show();
+                            }else if (response.status =='Competed'){
+                                $("#delivery-details-status").html('<span class="label label-success">Competed</span>');
+                                $("#delivery-confirm").hide();
+                            }
+
+                            var tex = "";
+                            for (i = 0; i < response.dtl.length; i++) {
+                                tex += "<tr><td>" + response.dtl[i].product.category.name + "</td><td>" + response.dtl[i].product.name + "</td><td>" + response.dtl[i].product.brand.name + "</td><td>" + response.dtl[i].deliveredQty + " </td></tr>";
+                                tex += "<tr><td colspan='4'> &nbsp;&nbsp;&nbsp;&nbsp;Delivery Map :"+response.dtl[i].deliveryMap+"</td></tr>"
+                            }
+//                            $("#delivery-confirm").attr('data="'+response.id+'"');
+//                            $("#delivery-confirm").data('class_value', response.id);
+
+                            $("#delivery-details-table").html(tex);
+                            $("#delivery-details-form").modal('show');
+                        }else {
+                            toastr.error(status);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
+                    }
+                });
+
+            });
+            $(".delivery-confirm").click(function () {
+                var id = $(this).attr('data');
+                $.ajax({
+                    url: "/delivery-complete/" + id,
+                    type: "POST",
+                    success: function (response, status) {
+                        if(status == 'success'){
+                            location.reload();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        toastr.error(XMLHttpRequest.status);
+                    }
+                });
+            });
+        });
+    </script>
+</div>

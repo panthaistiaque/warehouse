@@ -44,4 +44,15 @@ public class AllottedSlotCustomRepo {
         List<SlotAllotted> list = jdbcTemplate.query(sb.toString(),new BeanPropertyRowMapper(SlotAllotted.class));
         return list;
     }
+
+    public List<SlotAllotted> getUsableSlot(Integer id, Integer limit){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT sa.* FROM slot_allotted sa  ");
+        sb.append(" INNER JOIN slot s ON s.id = sa.slot_id  ");
+        sb.append(" WHERE product_id="+ id + " AND sa.is_active = TRUE  ");
+        sb.append(" ORDER BY qty ASC,last_update_on ASC, shelf_id ASC, slot_id DESC  ");
+        sb.append(" LIMIT  "+ limit + " ");
+        List<SlotAllotted> list = jdbcTemplate.query(sb.toString(),new BeanPropertyRowMapper(SlotAllotted.class));
+        return list;
+    }
 }

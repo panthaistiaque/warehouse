@@ -27,6 +27,10 @@ public class Status {
         public static final String  APPROVED = "Approved";
         public static final String  RECEIVE = "Receive";
     }
+    public class DELIVERY_STATUS{
+        public static final String  INITIATED = "Initiated";
+        public static final String  COMPLETE = "Competed";
+    }
 
     public class Notification{
         public static final String  ERROR_404 = "Try to reach on a invalid URL";

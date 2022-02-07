@@ -41,10 +41,6 @@ public class ReceiveCtrl extends AppProperty {
         req.setStatus(Status.RECEIVE_STATUS.APPROVED);
         req.setApprovedDate(new Date());
         receivedService.receivedConfirm(req);
-//        order = orderService.save(order);
-//        if(order.getId()>0){
-//            redirect.addFlashAttribute("mess", "Order created successfully");
-//        }
         modelAndView.setViewName("redirect:/receive_list");
         return modelAndView;
     }

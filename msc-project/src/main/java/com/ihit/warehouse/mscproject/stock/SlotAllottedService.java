@@ -3,6 +3,7 @@ package com.ihit.warehouse.mscproject.stock;
 import com.ihit.warehouse.mscproject.config.Shelf;
 import com.ihit.warehouse.mscproject.config.Slot;
 import com.ihit.warehouse.mscproject.config.SlotRepo;
+import com.ihit.warehouse.mscproject.delivery.DeliveryDtl;
 import com.ihit.warehouse.mscproject.product.ProductModel;
 import com.ihit.warehouse.mscproject.receive.ReceivedDtl;
 import org.springframework.beans.BeanUtils;
@@ -75,8 +76,32 @@ public class SlotAllottedService {
     public SlotAllotted findHalfFullSlot(ProductModel product) {
         return slotAllottedRepo.findByProductAndIsFull(product, false);
     }
-    public List usedSlotByShelf(Shelf shelf){
+
+    public List usedSlotByShelf(Shelf shelf) {
 //        return slotCustomRepo.usedSlotByShelf(shelf_id);
         return slotAllottedRepo.findAllBySlotShelf(shelf);
+    }
+
+    public String SlotDeAllotted(DeliveryDtl dtl) {
+        String s ="";
+       int dQty= (dtl.getDeliveredQty()/2);
+        if(dQty>=1){
+            List<SlotAllotted> list = slotCustomRepo.getUsableSlot(dtl.getProduct().getId(),dQty);
+            for (SlotAllotted slotAllotted: list) {
+                 s +=  slotRepo.getOne(slotAllotted.getSlotId()).getName()+" -> "+slotAllotted.getQty()+", " ;
+                slotAllotted.setActive(false);
+                slotAllotted.setLastUpdateOn(new Date());
+                slotAllottedRepo.save(slotAllotted);
+            }
+        }
+        if(dQty*2!=dtl.getDeliveredQty()){
+            List<SlotAllotted> list = slotCustomRepo.getUsableSlot(dtl.getProduct().getId(),1);
+            for (SlotAllotted slotAllotted: list) {
+                s +=  slotRepo.getOne(slotAllotted.getSlotId()).getName()+" -> 1, " ;
+                slotAllotted.setQty(slotAllotted.getQty()-1);
+                slotAllottedRepo.save(slotAllotted);
+            }
+        }
+        return s;
     }
 }

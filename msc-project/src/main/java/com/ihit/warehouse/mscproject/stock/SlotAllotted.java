@@ -33,5 +33,7 @@ public class SlotAllotted {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(columnDefinition = "DATE")
     private Date lastUpdateOn;
+    @Transient
+    private Integer slotId;
 
 }
