@@ -25,7 +25,7 @@ public class authCtrl {
     @GetMapping(value = "/")
     public ModelAndView userList(final ModelAndView model) {
 //        return Arrays.asList("Istiaque","Hossain","Pantha");
-        model.setViewName("redirect:/user-list");
+        model.setViewName("redirect:/home");
         return model;
     }
 

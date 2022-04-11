@@ -6,51 +6,6 @@
 <span th:fragment="menuPortion">
  <div class="sidebar-nav">
     <ul>
-        <!--<li><a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse"><i
-                class="fa fa-fw fa-dashboard"></i> Dashboard<i class="fa fa-collapse"></i></a></li>
-        <li>
-            <ul class="dashboard-menu nav nav-list collapse in">
-                <li><a href="index.html"><span class="fa fa-caret-right"></span> Main</a></li>
-                <li><a href="users.html"><span class="fa fa-caret-right"></span> User List</a></li>
-                <li class="active"><a href="user.html"><span class="fa fa-caret-right"></span> User Profile</a></li>
-                <li><a href="media.html"><span class="fa fa-caret-right"></span> Media</a></li>
-                <li><a href="calendar.html"><span class="fa fa-caret-right"></span> Calendar</a></li>
-            </ul>
-        </li>
-
-        <li data-popover="true"
-            data-content="Items in this group require a <strong><a href='http://portnine.com/bootstrap-themes/aircraft' target='blank'>premium license</a><strong>."
-            rel="popover" data-placement="right"><a href="#" data-target=".premium-menu" class="nav-header collapsed"
-                                                    data-toggle="collapse"><i class="fa fa-fw fa-fighter-jet"></i> Premium Features<i
-                class="fa fa-collapse"></i></a></li>
-        <li>
-            <ul class="premium-menu nav nav-list collapse">
-                <li class="visible-xs visible-sm"><a href="#">- Premium features require a license -</a>
-                <li><a href="premium-profile.html"><span class="fa fa-caret-right"></span> Enhanced Profile</a></li>
-                <li><a href="premium-blog.html"><span class="fa fa-caret-right"></span> Blog</a></li>
-                <li><a href="premium-blog-item.html"><span class="fa fa-caret-right"></span> Blog Page</a></li>
-                <li><a href="premium-pricing-tables.html"><span class="fa fa-caret-right"></span> Pricing Tables</a></li>
-                <li><a href="premium-upgrade-account.html"><span class="fa fa-caret-right"></span> Upgrade Account</a></li>
-                <li><a href="premium-widgets.html"><span class="fa fa-caret-right"></span> Widgets</a></li>
-                <li><a href="premium-timeline.html"><span class="fa fa-caret-right"></span> Activity Timeline</a></li>
-                <li><a href="premium-users.html"><span class="fa fa-caret-right"></span> Enhanced Users List</a></li>
-                <li><a href="premium-media.html"><span class="fa fa-caret-right"></span> Enhanced Media</a></li>
-                <li><a href="premium-invoice.html"><span class="fa fa-caret-right"></span> Invoice</a></li>
-                <li><a href="premium-build.html"><span class="fa fa-caret-right"></span> Advanced Tools</a></li>
-                <li><a href="premium-colors.html"><span class="fa fa-caret-right"></span> Additional Color Themes</a></li>
-            </ul>
-        </li>
-
-        <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i
-                class="fa fa-fw fa-briefcase"></i> Account <span class="label label-info">+3</span></a>
-        </li>
-        <li>
-            <ul class="accounts-menu nav nav-list collapse">
-                <li><a href="sign-in.html"><span class="fa fa-caret-right"></span> Sign In</a></li>
-                <li><a href="sign-up.html"><span class="fa fa-caret-right"></span> Sign Up</a></li>
-                <li><a href="reset-password.html"><span class="fa fa-caret-right"></span> Reset Password</a></li>
-            </ul>
-        </li>-->
         <li><a href="/home" class="nav-header"><i class="fa fa-fw fa-tachometer"></i>Dashboard</a></li>
         <li sec:authorize="hasRole('ROLE_SM')">
             <a data-target=".user-menu" class="nav-header collapsed" data-toggle="collapse">
@@ -63,23 +18,23 @@
                 <li><a href="/user-list"><span class="fa fa-caret-right"></span> User List</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasRole('ROLE_SM')">
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <a data-target=".order-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-user"></i>Order<i class="fa fa-collapse"></i>
             </a>
         </li>
-        <li sec:authorize="hasRole('ROLE_SM')">
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <ul class="order-menu nav nav-list collapse">
                 <li><a href="/order_form"><span class="fa fa-caret-right"></span>New Order </a></li>
                 <li><a href="/order_list"><span class="fa fa-caret-right"></span> Order List</a></li>
             </ul>
         </li>
-        <li sec:authorize="hasRole('ROLE_SM')">
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <a  data-target=".product-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-user"></i>Product Entry<i class="fa fa-collapse"></i>
             </a>
         </li>
-        <li sec:authorize="hasRole('ROLE_SM')">
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <ul class="product-menu nav nav-list collapse">
                 <li><a href="/unit_form"><span class="fa fa-caret-right"></span>New Unit</a></li>
                 <li><a href="/unit_list"><span class="fa fa-caret-right"></span>Unit List</a></li>
@@ -91,65 +46,39 @@
                 <li><a href="/product_list"><span class="fa fa-caret-right"></span>Product List</a></li>
             </ul>
         </li>
-        <li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <a  data-target=".suppliers-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-list"></i> Suppliers<i class="fa fa-collapse"></i>
             </a>
         </li>
-        <li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')">
             <ul class="suppliers-menu nav nav-list collapse">
                 <li><a href="/new-supplier"><span class="fa fa-caret-right"></span>New Suppliers</a></li>
                 <li><a href="/supplier-list"><span class="fa fa-caret-right"></span> Suppliers List</a></li>
             </ul>
         </li>
-        <li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM', 'ROLE_WS')">
             <a  data-target=".receive-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-list"></i>Receive<i class="fa fa-collapse"></i>
             </a>
         </li>
-        <li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM', 'ROLE_WS')">
             <ul class="receive-menu nav nav-list collapse">
                 <!--<li><a href="/new-supplier"><span class="fa fa-caret-right"></span>New Suppliers</a></li>-->
                 <li><a href="/receive_list"><span class="fa fa-caret-right"></span> Receive List</a></li>
             </ul>
         </li>
-        <!--<li>-->
-            <!--<a  data-target=".Shipment-menu" class="nav-header collapsed" data-toggle="collapse">-->
-                <!--<i class="fa fa-truck"></i> Shipment<i class="fa fa-collapse"></i>-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li>-->
-            <!--<ul class="Shipment-menu nav nav-list collapse">-->
-                <!--<li><a href="/new-shipment"><span class="fa fa-caret-right"></span>Shipment Request</a></li>-->
-                <!--<li><a href="/all-shipment"><span class="fa fa-caret-right"></span>Shipment List</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-        <li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM', 'ROLE_WS')">
             <a  data-target=".delivery-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-truck"></i>Delivery<i class="fa fa-collapse"></i>
             </a>
         </li>
-        <li>
+        <li >
             <ul class="delivery-menu nav nav-list collapse">
-                <li><a href="/delivery_form"><span class="fa fa-caret-right"></span>Delivery Request</a></li>
-                <li><a href="/delivery_list"><span class="fa fa-caret-right"></span>Delivery List</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM')"><a href="/delivery_form"><span class="fa fa-caret-right"></span>Delivery Request</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM','ROLE_WS')"><a href="/delivery_list"><span class="fa fa-caret-right"></span>Delivery List</a></li>
             </ul>
         </li>
-        <!--<li>-->
-            <!--<a data-target=".Goods-menu" class="nav-header collapsed" data-toggle="collapse">-->
-                <!--<i class="fa fa-fw fa-list"></i>Goods<i class="fa fa-collapse"></i>-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li>-->
-            <!--<ul class="Goods-menu nav nav-list collapse">-->
-                <!--<li><a href="new-supplier"><span class="fa fa-caret-right"></span>Goods Received</a></li>-->
-                <!--<li><a href="supplier-list"><span class="fa fa-caret-right"></span>GR List</a></li>-->
-                <!--<li><a href="new-supplier"><span class="fa fa-caret-right"></span>Stock Raise</a></li>-->
-                <!--<li><a href="supplier-list"><span class="fa fa-caret-right"></span>Stock Raise List</a></li>-->
-            <!--</ul>-->
-        <!--</li>-->
-
-
         </ul>
 </div>
 </span>

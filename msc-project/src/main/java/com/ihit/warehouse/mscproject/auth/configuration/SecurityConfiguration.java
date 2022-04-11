@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final String[] UNAUTHENTICATED_URL = {"/vendor-singup","/order-delevary-confirm","/order-shipment","/order-details/*"};
-
+    private final String[] ADMIN_URL ={};
     @Autowired
     AuthenticationProvider authenticationProvider;
 
@@ -38,7 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable()
                 .csrf().disable()
-                .authorizeRequests().antMatchers(UNAUTHENTICATED_URL).permitAll().anyRequest().authenticated()
+                .authorizeRequests()
+//                .antMatchers(ADMIN_URL).hasAuthority("ADMIN")
+                .antMatchers(UNAUTHENTICATED_URL).permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()

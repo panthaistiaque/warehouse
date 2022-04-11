@@ -5,7 +5,11 @@ INSERT INTO role (role_name) VALUES ('ROLE_MTM');
 INSERT INTO role (role_name) VALUES ('ROLE_S');
 
 insert into users(email, first_name, last_name, password, phone) values ('pantha@gmail.com', 'Pantha', 'Istiaqe','123', '01685331016');
+insert into users(email, first_name, last_name, password, phone) values ('manager@gmail.com', 'Ware House', 'Manager','123', '01911109376');
+insert into users(email, first_name, last_name, password, phone) values ('staff@gmail.com', 'Ware House', 'Staff','123', '01911109336');
 insert into user_role(id, role_id) values (1,1);
+insert into user_role(id, role_id) values (2,2);
+insert into user_role(id, role_id) values (3,3);
 
 insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('16 Akmol khan road, Mitford', 'Panta', '01685331016', 'panthaistiaque@gmail.com', 'IH Traders', null, 'VENDOR','a8fddcfb-a923-4de2-9319-b61662275ef1');
 insert into suppliers(address, contact_person_name, contact_person_phone, email, name, remarks, type, token) values ('39 New market, Dhaka', 'Istiaque', '01721672283', 'mdistiaque56@yahoo.com', 'Thai Brothers and Co.', null, 'VENDOR','1035af17-5651-4d4d-86ad-4bfe4f640646');
