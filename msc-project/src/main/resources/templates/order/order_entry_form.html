@@ -69,7 +69,7 @@
                                             <thead>
                                             <tr>
                                                 <th class="sn">SL</th>
-                                                <th>Category</th>
+                                                <!--<th>Category</th>-->
                                                 <th>Product</th>
                                                 <th>Unit</th>
                                                 <th>Qrt</th>
@@ -79,9 +79,9 @@
                                             <tbody id="tbl_posts_body">
                                                 <tr id="rec-1">
                                                     <td class="sn">1.</td>
-                                                    <td >
-                                                        <input class="form-control" th:name="dtl[0].category"  value="2"/>
-                                                    </td>
+                                                    <!--<td >-->
+                                                        <!--<input class="form-control" th:name="dtl[0].category"  value="2"/>-->
+                                                    <!--</td>-->
                                                     <td>
                                                         <select class="form-control select2-dropdown" th:name="dtl[0].product" >
                                                             <option style="display: none" value="">Select one</option>
@@ -153,9 +153,9 @@
                 var size = $('#tbl_posts >tbody >tr').length + 1;
                 var txt = '<tr id="rec-'+size+'">'+
                         '<td class="sn">'+size+'.</td>'+
-                        '<td >'+
-                        '<input class="form-control"  value="7"/>'+
-                        '</td>'+
+//                        '<td >'+
+//                        '<input class="form-control"  value="7"/>'+
+//                        '</td>'+
                         '<td>'+
                         '<select class="form-control select2-dropdown" name="dtl['+(size-1)+'].product" >'+
                         '<option style="display: none" value="">Select one</option>'+

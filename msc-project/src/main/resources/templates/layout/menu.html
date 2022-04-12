@@ -6,7 +6,9 @@
 <span th:fragment="menuPortion">
  <div class="sidebar-nav">
     <ul>
-        <li><a href="/home" class="nav-header"><i class="fa fa-fw fa-tachometer"></i>Dashboard</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_SM', 'ROLE_WM', 'ROLE_WS')">
+            <a href="/home" class="nav-header"><i class="fa fa-fw fa-tachometer"></i>Dashboard</a>
+        </li>
         <li sec:authorize="hasRole('ROLE_SM')">
             <a data-target=".user-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="fa fa-fw fa-user"></i> User<i class="fa fa-collapse"></i>
